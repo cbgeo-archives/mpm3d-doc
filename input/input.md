@@ -1,6 +1,6 @@
 # Preprocessing
 
-To run `mpm-3d` code, there are a series of input files required.  
+To run `mpm-3d` code, there are a series of input files required. 
 
 ## Directory
 
@@ -54,9 +54,11 @@ In this method, two extra parameters are required, i.e., `gamma` and `beta`. A r
 
 ### Damping
 
-To reduce oscillation in this explicit code, artificial damping is implemented. Putting `dampingFlag` as 1 would add damping to the equation of motion. 
+To reduce oscillation in this explicit code, artificial damping is implemented. Putting `dampingFlag` as 1 would add damping to the equation of motion.
 
 One parameter is required, i.e., `dampingRatio`. A recommended value is between 0.02 and 0.05.
+
+Reference to this method could be obtained from: https://elib.uni-stuttgart.de/handle/11682/513.
 
 
 ## Mesh
