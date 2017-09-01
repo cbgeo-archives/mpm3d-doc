@@ -56,7 +56,7 @@ In this method, two extra parameters are required, i.e., `gamma` and `beta`. A r
 
 To reduce oscillation in this explicit code, artificial damping is implemented. Putting `dampingFlag` as 1 would add damping to the equation of motion. 
 
-One parameter is required, i.e., 'dampingRatio'. A recommended value is between 0.02 and 0.05.
+One parameter is required, i.e., `dampingRatio`. A recommended value is between 0.02 and 0.05.
 
 
 ## Mesh
