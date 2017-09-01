@@ -208,7 +208,7 @@ An example in the `element_testing/inputFiles/Traction.dat` is shown below.
 
 ## Material
 
-The material model selected to run the codes need to be specified in this file. For instance, if isotropic linear elastic model is used, the code would look something like this:
+The material model selected to run the codes need to be specified in this file: `element_testing/inputFiles/material.dat`. For instance, if isotropic linear elastic model is used, the code would look something like this:
 
 ```
 IsotropicLinearElastic {
@@ -219,8 +219,20 @@ IsotropicLinearElastic {
        density 2038.74
 }
 ```
+Currently, there are only two models being implemented, i.e., Isotropic Linear Elastic and Mohr Coulomb. Note that every model would have different number and sets of parameters required. Mohr Coulomb, for instance, would have more parameters and an example is shown below.
 
-Currently, there are only two models being implemented, i.e., Isotropic Linear Elastic and Mohr Coulomb.
+```
+MohrCoulomb {
+       youngModulus 1e+06
+       poissonRatio 0.2
+       phi 28
+       psi 0
+       cohesion 0
+       sigt 0
+       porosity 0.3
+       density 2038.74
+}
+```
 
 ## Notes
 
