@@ -9,7 +9,7 @@ All the input files need to be stored in a folder entitled `inputFiles`. For exa
 
 ## Input
 
-The code would first read 'input.dat' (directory: bin/element_testing/inputFiles/input.dat). This file would consist of the location to other input files as well as details of other parameters needed to run the code.
+The code would first read 'input.dat' (directory: `bin/element_testing/inputFiles/input.dat`). This file would consist of the location to other input files as well as details of other parameters needed to run the code.
 
 Assuming that we have the following contents in `input.dat`:
 
@@ -24,7 +24,7 @@ tractionsSoilPFileName         element_testing/inputFiles/Traction.dat
 outputFileName                 element_testing/results/results1.ile
 ```
 
-Therefore, the code would open 'element_testing/inputFiles/mesh.smf' to find the input mesh file required.
+Therefore, the code would open `element_testing/inputFiles/mesh.smf` to find the input mesh file required.
 
 In addition, there are other parameters that are important in this file. Here is an example:
 
@@ -43,8 +43,8 @@ dampingRatio                   0.05
 ```
 
 Most of the parameters are self-explanatory. There are two things to be explained:
-	* Newmark Integration
-	* Damping
+* Newmark Integration
+* Damping
 
 ### Newmark Integration
 
