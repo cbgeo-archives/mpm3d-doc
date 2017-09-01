@@ -4,7 +4,7 @@ To run `mpm-3d` code, there are a series of input files required.
 
 ## Directory
 
-Note that all the input files need to be stored in a folder entitled `inputFiles`. For example, running a problem called `element_testing` would require it to be located such that we have `bin/element_testing/inputFiles`. The results would be stored at `bin/element_testing/results`.
+All the input files need to be stored in a folder entitled `inputFiles`. For example, running a problem called `element_testing` would require it to be located such that we have `bin/element_testing/inputFiles`. The results would be stored at `bin/element_testing/results`.
 
 
 ## Input
@@ -25,6 +25,39 @@ outputFileName                 element_testing/results/results1.ile
 ```
 
 Therefore, the code would open 'element_testing/inputFiles/mesh.smf' to find the input mesh file required.
+
+In addition, there are other parameters that are important in this file. Here is an example:
+
+```
+gravityFlag                    1
+boundaryFrictionMiu            0
+soilParticleSpacing            0.005
+timeInterval                   1e-06
+numberOfSteps                  800000
+numberOfSubStepsOS             1000
+newmarkMethod                  0
+gamma                          0.5
+beta                           0.25
+dampingFlag                    0
+dampingRatio                   0.05
+```
+
+Most of the parameters are self-explanatory. There are two things to be explained:
+	* Newmark Integration
+	* Damping
+
+### Newmark Integration
+
+Putting `newmarkMethod` as 1 would integrate velocity and displacement using Newmark-beta method (1959). The details of the mathematics can be seen here: https://en.wikipedia.org/wiki/Newmark-beta_method. 
+
+In this method, two extra parameters are required, i.e., `gamma` and `beta`. A reasonable value of `gamma` is 0.5 and `beta` could be anywhere between 0 and 0.5 with a recommended value of 0.25.
+
+### Damping
+
+To reduce oscillation in this explicit code, artificial damping is implemented. Putting `dampingFlag` as 1 would add damping to the equation of motion. 
+
+One parameter is required, i.e., 'dampingRatio'. A recommended value is between 0.02 and 0.05.
+
 
 ## Mesh
 
