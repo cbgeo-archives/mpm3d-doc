@@ -102,7 +102,14 @@ An example in the `element_testing/inputFiles/mesh.smf` where there is only one 
 Note that for 2D element, we would have the element shape to be `quadrilateral`. For 3D element, it would be `hexahedron`. The element number of points (nodes) for the former is 4 and for the latter is 8.
 
 ### Submesh
-* Not yet written
+A SubMesh is a mesh defined as a subset of a given mesh. It provides a convenient way to create matching meshes for multiphysics applications by creating meshes for subdomains as subsets of a single global mesh.
+
+In the example of element testing, there would not be any submesh used. Therefore, the file `element_testing/inputFiles/submesh.dat` would look as follow.
+
+```
+1
+0 0 0 0 0
+```
 
 
 ### Constraints
