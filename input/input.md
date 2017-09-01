@@ -61,14 +61,77 @@ One parameter is required, i.e., `dampingRatio`. A recommended value is between 
 
 ## Mesh
 
+In MPM, background mesh is one important component of the method. Data are stored in the points and mapped to the nodes of the mesh where computations are performed.
+
+Note that a mesh generator code is usually used to make the mesh files inputs including the submesh and the constraints.
+
 ### Mesh File
+
+The mesh file has to have the following format:
+
+```
+NN   NE \n
+x1  y1  z1  \n
+....        \n
+xNN yNN zNN \n
+v1_1  v1_2 ... v1_NPE   \n
+...                     \n
+vNE_1 vNE_2 ... vNE_NPE \n
+
+where NN is the number of nodes, NE the number of elements, and NPE refers to the number of nodes per element. Note that the latter number is fixed at compile time.
+```
+
+An example in the `element_testing/inputFiles/mesh.smf` where there is only one element is provided here.
+
+```
+! elementShape quadrilateral 
+! elementNumPoints 4 
+4 1
+0 0 0
+1 0 0
+0 1 0
+1 1 0
+0 1 3 2
+```
+
+Note that for 2D element, we would have the element shape to be `quadrilateral`. For 3D element, it would be `hexahedron`. The element number of points (nodes) for the former is 4 and for the latter is 8.
 
 ### Submesh
 
+
+
 ### Constraints
 
+The boundary constraints are specified and the file has to have the following format:
 
-## Soil Particles / Points
+```
+NGC     NFC    \n
+n_1     d_1    \n
+...            \n
+n_NGC   d_NGC  \n
+n_1     dn_1     sdn_1     \n
+...                        \n
+n_NFC   dn_NFC   sdn_NFC   \n
+
+where NGC is the number of general constraints in this file, which are used to set velocity and acceleration components in the d_i direction to be zero. n_i is the node number, d_i is the direction number (0|1|2) NFC is the number of friction constraints, which are used to limit the acceleration in the tangential direction to boundary. n_i is the node number, dn_i is the perpendicular direction to boundary (0|1|2). sdn_i is the sign (+1/-1) of dn_i w.r.t coordinate system ( i.e. =-1 if bottom of mesh boundary )
+ ```
+
+An example in the `element_testing/inputFiles/mesh.constraints` is shown below.
+
+```
+4 4
+0 0
+2 0
+0 1
+1 1
+2 1 1
+3 1 1
+1 0 1
+3 0 1
+```
+
+
+## Soil Particles (Points)
 
 ### Location
 
