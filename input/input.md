@@ -78,7 +78,10 @@ v1_1  v1_2 ... v1_NPE   \n
 ...                     \n
 vNE_1 vNE_2 ... vNE_NPE \n
 
-where NN is the number of nodes, NE the number of elements, and NPE refers to the number of nodes per element. Note that the latter number is fixed at compile time.
+where NN is the number of nodes, 
+NE the number of elements, and 
+NPE refers to the number of nodes per element. 
+Note that the latter number is fixed at compile time.
 ```
 
 An example in the `element_testing/inputFiles/mesh.smf` where there is only one element is provided here.
@@ -97,7 +100,7 @@ An example in the `element_testing/inputFiles/mesh.smf` where there is only one 
 Note that for 2D element, we would have the element shape to be `quadrilateral`. For 3D element, it would be `hexahedron`. The element number of points (nodes) for the former is 4 and for the latter is 8.
 
 ### Submesh
-
+* Not yet written
 
 
 ### Constraints
@@ -113,7 +116,10 @@ n_1     dn_1     sdn_1     \n
 ...                        \n
 n_NFC   dn_NFC   sdn_NFC   \n
 
-where NGC is the number of general constraints in this file, which are used to set velocity and acceleration components in the d_i direction to be zero. n_i is the node number, d_i is the direction number (0|1|2) NFC is the number of friction constraints, which are used to limit the acceleration in the tangential direction to boundary. n_i is the node number, dn_i is the perpendicular direction to boundary (0|1|2). sdn_i is the sign (+1/-1) of dn_i w.r.t coordinate system ( i.e. =-1 if bottom of mesh boundary )
+where NGC is the number of general constraints in this file, which are used to set velocity and acceleration components in the d_i direction to be zero. 
+n_i is the node number, d_i is the direction number (0|1|2) NFC is the number of friction constraints, which are used to limit the acceleration in the tangential direction to boundary. 
+n_i is the node number, dn_i is the perpendicular direction to boundary (0|1|2). 
+sdn_i is the sign (+1/-1) of dn_i w.r.t coordinate system ( i.e. =-1 if bottom of mesh boundary )
  ```
 
 An example in the `element_testing/inputFiles/mesh.constraints` is shown below.
@@ -133,7 +139,23 @@ An example in the `element_testing/inputFiles/mesh.constraints` is shown below.
 
 ## Soil Particles (Points)
 
+Then, we need points as after all the method is called material point method for a reason. The initial location of the points should not coincide with the nodes of the mesh, neither should it be on the boundary of the elements.
+
+Note that these files with the points are usually generated with another code. 
+
 ### Location
+
+A file simply containing the number of points along with the coordinates. Note that even in 2D, z coordinate value needs to be specified as well.
+
+An example in the `element_testing/inputFiles/soilParticles.dat` is shown below.
+
+```
+4
+0.211324865	0.211324865	0
+0.788675135	0.211324865	0
+0.211324865	0.788675135	0
+0.788675135	0.788675135	0
+```
 
 ### Initial Stress
 
