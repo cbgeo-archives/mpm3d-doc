@@ -157,10 +157,54 @@ An example in the `element_testing/inputFiles/soilParticles.dat` is shown below.
 0.788675135	0.788675135	0
 ```
 
+The first line indicates the number of points in the file, and the rest are the coordinates.
+
 ### Initial Stress
+
+Voigt Stress Notation is being used, which has 6 components. More information could be found in this link: https://en.wikipedia.org/wiki/Voigt_notation.
+
+An example in the `element_testing/inputFiles/initStressSoilP.dat` is shown below.
+
+```
+4
+0	0	0	0	0	0	0	
+1	0	0	0	0	0	0	
+2	0	0	0	0	0	0	
+3	0	0	0	0	0	0
+```
+
+The first entry of every line refers to the index of the point.
+
+Lastly, in terms of the units used, please check the information regarding consistent unit system at the bottom of the document.
+
 
 ### Traction
 
+In MPM, traction or external forces are applied on the points (not to nodes of the mesh like FEM). The format of the file should be like the following:
+
+```
+NTP            \n
+p_1     d_1    tp_1    \n
+...                    \n
+p_NTP   d_NTP  tp_NTP  \n
+
+where NTP is the number of traction particles in this file, which are used
+to give traction forces in the d_i direction. 
+p_i is the particle id, 
+d_i is the direction number (0|1|2) of traction force. 
+tp_i is the traction pressure. 
+NTP is the number of particles with traction pressures.
+``` 
+
+An example in the `element_testing/inputFiles/Traction.dat` is shown below.
+
+```
+4
+0	1	-50000
+1	1	-50000
+2	1	-50000
+3	1	-50000
+```
 
 ## Material
 
