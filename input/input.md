@@ -81,16 +81,15 @@ Note that a mesh generator code is usually used to make the mesh files inputs in
 The mesh file must have the following format:
 
 ```
-NN   NE \n
-x1  y1  z1  \n
-....        \n
-xNN yNN zNN \n
-n1_1  n1_2 ... n1_NPE   \n
-...                     \n
-nNE_1 nNE_2 ... nNE_NPE \n
+NN   NE
+x1  y1  z1
+....
+xNN yNN zNN
+n1_1  n1_2 ... n1_NPE
+...
+nNE_1 nNE_2 ... nNE_NPE 
 
 ```
-
 
 `NN` is the number of nodes.
 
@@ -105,7 +104,7 @@ The `ID` of each node from `0-NN` will be the order in which they written.eg:
 x1 y1 z1 = Node 0
 x2 y2 z2 = Node 1
 ...
-xN yNN zNN = Node NN
+xNN yNN zNN = Node NN
 
 ```
 
