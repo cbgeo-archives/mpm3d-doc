@@ -48,8 +48,11 @@ dampingRatio                   0.05
 ```
 
 `gravityFlag` determines if gravity is on or off. `1` is on, `0` is off.
+
 `boundaryFrictionMiu` determines the friction coefficient, ranging from `0` to `1`.
+
 `soilParticleSpacing` is used to calculate the mass of a point, using: `mass = soilParticleSpacing  * soilParticleSpacing  * soilParticleSpacing  * density` for a 3D model.
+
 `timeInterval` determines the time-step in seconds and `numberOfSteps` determines the number of steps. `numberOfSubStepsOS ` is the number of substeps.
 
 #### Newmark Integration
