@@ -12,7 +12,7 @@ A series of input files are required to run the `mpm-3d` code, a description of 
 
 # Input Files
 
-##Input.dat
+##Input dat
 
 An `input.dat` file within the `inputFiles` folder is required to provide the code with the location of the other necessary files.
 
@@ -78,37 +78,56 @@ Note that a mesh generator code is usually used to make the mesh files inputs in
 
 ### Mesh File
 
-The mesh file has to have the following format:
+The mesh file must have the following format:
 
 ```
 NN   NE \n
 x1  y1  z1  \n
 ....        \n
 xNN yNN zNN \n
-v1_1  v1_2 ... v1_NPE   \n
+n1_1  n1_2 ... n1_NPE   \n
 ...                     \n
-vNE_1 vNE_2 ... vNE_NPE \n
+nNE_1 nNE_2 ... nNE_NPE \n
 
-where NN is the number of nodes, 
-NE the number of elements, and 
-NPE refers to the number of nodes per element. 
-Note that the latter number is fixed at compile time.
 ```
 
-An example in the `element_testing/inputFiles/mesh.smf` where there is only one element is provided here.
+
+`NN` is the number of nodes.
+
+`NE` the number of elements.
+ 
+`x_i, y_i,z_i` correspond to the Cartesian coordinates of each node. 
+
+The `ID` of each node from `0-NN` will be the order in which they written.eg:
+
+
+```
+x1 y1 z1 = Node 0
+x2 y2 z2 = Node 1
+...
+xN yNN zNN = Node NN
+
+```
+
+`NPE` refers to the number of nodes per element. 
+
+
+`n1_1, n1_2... n1_NPE` correspons to which nodes make up each element using the unwritten Node `ID`'s.
+
+An example of the single element `element_testing/inputFiles/mesh.smf` mesh file is given below.
 
 ```
 ! elementShape quadrilateral 
 ! elementNumPoints 4 
 4 1
-0 0 0
+0 0 0 //Node coordinates
 1 0 0
 0 1 0
 1 1 0
-0 1 3 2
+0 1 3 2 //Element made of Node ID's
 ```
 
-Note that for 2D element, we would have the element shape to be `quadrilateral`. For 3D element, it would be `hexahedron`. The element number of points (nodes) for the former is 4 and for the latter is 8.
+Note that for 2D element, the element shape will be `quadrilateral`. For 3D element, it will be `hexahedron`. Assuming element vertices are nodes, `quadrilateral` elements will have 4 nodes and `hexahedron` 8 nodes.
 
 ### Submesh
 A SubMesh is a mesh defined as a subset of a given mesh. It provides a convenient way to create matching meshes for multiphysics applications by creating meshes for subdomains as subsets of a single global mesh.
