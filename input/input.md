@@ -1,17 +1,22 @@
 # Preprocessing
 
-To run `mpm-3d` code, there are a series of input files required. 
+To run in 2D uncomment `line 15` (`// #define _MPM2D_  // Toggle between MPM2D and 3D Analysis`) from `MpmItems.hpp`. For 3D, leave this line commented out.
+
 
 ## Directory
 
-All the input files need to be stored in a folder entitled `inputFiles`. For example, running a problem called `element_testing` would require it to be located such that we have `bin/element_testing/inputFiles`. The results would be stored at `bin/element_testing/results`.
+Each new problem must have a new folder (eg.`element_testing`) within this folder the input files must be located in a seperate folder entitiled `inputFiles`. By default, problem folders are assumed to be located in a `bin` folder, giving `bin/element_testing/inputFiles`. The command `./mpm -f element_testing` will direct the code to the `element_testing` folder and run the input files located within it.
+
+A series of input files are required to run the `mpm-3d` code, a description of each is provided below.
 
 
-## Input
+# Input Files
 
-The code would first read 'input.dat' (directory: `bin/element_testing/inputFiles/input.dat`). This file would consist of the location to other input files as well as details of other parameters needed to run the code.
+##Input.dat
 
-Assuming that we have the following contents in `input.dat`:
+An `input.dat` file within the `inputFiles` folder is required to provide the code with the location of the other necessary files.
+
+An example of the required format is given below for a problem titled `element_testing`.
 
 ```
 inputMeshFileName              element_testing/inputFiles/mesh.smf
@@ -26,7 +31,7 @@ outputFileName                 element_testing/results/results1.ile
 
 Therefore, the code would open `element_testing/inputFiles/mesh.smf` to find the input mesh file required.
 
-In addition, there are other parameters that are important in this file. Here is an example:
+The `input.dat` file also contains key parameters required to set the conditions of the model they are as follows:
 
 ```
 gravityFlag                    1
@@ -42,21 +47,22 @@ dampingFlag                    0
 dampingRatio                   0.05
 ```
 
-Most of the parameters are self-explanatory. There are two things to be explained:
-* Newmark Integration
-* Damping
+`gravityFlag` determines if gravity is on or off. `1` is on, `0` is off.
+`boundaryFrictionMiu` determines the friction coefficient, ranging from `0` to `1`.
+`soilParticleSpacing` is used to calculate the mass of a point, using: `mass = soilParticleSpacing  * soilParticleSpacing  * soilParticleSpacing  * density` for a 3D model.
+`timeInterval` determines the time-step in seconds and `numberOfSteps` determines the number of steps. `numberOfSubStepsOS ` is the number of substeps.
 
-### Newmark Integration
+#### Newmark Integration
 
-Putting `newmarkMethod` as 1 would integrate velocity and displacement using Newmark-beta method (1959). The details of the mathematics can be seen here: https://en.wikipedia.org/wiki/Newmark-beta_method. 
+Setting `newmarkMethod` as 1 will integrate velocity and displacement using the Newmark-beta method (1959). The details of the mathematics can be seen at: https://en.wikipedia.org/wiki/Newmark-beta_method. 
 
-In this method, two extra parameters are required, i.e., `gamma` and `beta`. A reasonable value of `gamma` is 0.5 and `beta` could be anywhere between 0 and 0.5 with a recommended value of 0.25.
+In this method, two extra parameters are required, i.e., `gamma` and `beta`. A reasonable value of `gamma` is 0.5 and `beta` can be anywhere between 0 and 0.5 with a recommended value of 0.25.
 
-### Damping
+#### Damping
 
-To reduce oscillation in this explicit code, artificial damping is implemented. Putting `dampingFlag` as 1 would add damping to the equation of motion.
+To reduce stress oscillation in this explicit code, artificial damping is implemented. Setting `dampingFlag` as 1 will add damping to the equation of motion.
 
-One parameter is required, i.e., `dampingRatio`. A recommended value is between 0.02 and 0.05.
+A `dampingRatio` parameter is required with a recommended value is between 0.02 and 0.05.
 
 Reference to this method could be obtained from: https://elib.uni-stuttgart.de/handle/11682/513.
 
