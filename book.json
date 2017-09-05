@@ -1,13 +1,3 @@
 {
   "plugins": ["anchorjs", "richquotes", "mathjax"]
-  "pluginsConfig":
-    {
-        "richquotes":
-        {
-            "star": {
-                "alert": "warning",
-                "picto": "fa-star"
-            }
-        }
-    }
 }
