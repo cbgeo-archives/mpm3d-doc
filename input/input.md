@@ -1,17 +1,14 @@
 # Preprocessing
 
 ## Units
-A consistent system of units must be maintained in this code. All values input into the code with units must follow a system from the table in the following link:
-
-http://www.idac.co.uk/services/downloads/consistent.pdf.
-
+A consistent system of units must be maintained in this code. All values input into the code with units must follow a system from the table in the following [link](http://www.idac.co.uk/services/downloads/consistent.pdf).
 
 ## Dimensions
 To switch between the 2D and 3D implementation of `mpm-3d` code, uncomment or comment `#define _MPM2D_ ` in [MpmItems.hpp](https://github.com/cb-geo/mpm-3d/blob/master/cartesian/src/MpmItems.hpp#L15). `#define _MPM2D_` enables 2D, uncommenting the line enables the 3D version.
 
 ## Directory
 
-Each new problem must have a new folder (eg.`element_testing`) within this folder the input files must be located in a seperate folder entitiled `inputFiles`. By default, problem folders are assumed to be located in a `bin` folder, giving `bin/element_testing/inputFiles`. The command `./mpm -f element_testing` will direct the code to the `element_testing` folder and run the input files located within it.
+Each new problem must have a new folder (e.g.`element_testing`) within this folder the input files must be located in a seperate folder entitiled `inputFiles`. By default, problem folders are assumed to be located in a `bin` folder, giving `bin/element_testing/inputFiles`. The command `./mpm -f element_testing` will direct the code to the `element_testing` folder and run the input files located within it.
 
 `mpm-3d` requires a collection of input files, a description of each is provided below.
 
@@ -22,7 +19,7 @@ Each new problem must have a new folder (eg.`element_testing`) within this folde
 
 An `input.dat` file provides the location of the other necessary files.
 
-An example of the requirsamaed format is given below for a problem titled `element_testing`.
+An example of the required format is given below for a problem titled `element_testing`.
 
 ```
 inputMeshFileName              element_testing/inputFiles/mesh.smf
@@ -57,29 +54,33 @@ dampingRatio                   0.05
 
 `boundaryFrictionMiu` determines the friction coefficient, ranging from `0` to `1`.
 
-`timeInterval` determines the time-step in seconds and `numberOfSteps` determines the number of steps. `numberOfSubStepsOS ` is the number of substeps.
+`timeInterval` determines the time-step in seconds.
+
+`numberOfSteps` determines the number of steps. 
+
+`numberOfSubStepsOS` is the number of substeps before the code writes an output file.
 
 
 ### Spacing
 
-`soilParticleSpacing` is used to calculate the mass of a point, using: `mass = soilParticleSpacing  * soilParticleSpacing  * soilParticleSpacing  * density` for a 3D model. 
+`soilParticleSpacing` is used to calculate the mass of a point, using: `mass = soilParticleSpacing  * soilParticleSpacing  * soilParticleSpacing  * density` for a 3D model and `mass = soilParticleSpacing  * soilParticleSpacing  * density` for a 2D model. 
 
 Note: Spacing must have units concordant with those used for density and the geometry of the model, the density input is described later.
 
 
 ### Newmark Integration
 
-Setting `newmarkMethod` as 1 will integrate velocity and displacement using the Newmark-beta method (1959). See [Newmark Beta method](https://en.wikipedia.org/wiki/Newmark-beta_method).
-.
+Setting `newmarkMethod` as `1` will integrate velocity and displacement using the Newmark-beta method (1959). See [Newmark Beta method](https://en.wikipedia.org/wiki/Newmark-beta_method).
+
 In this method, two extra parameters are required, i.e., `gamma` and `beta`. A reasonable value of `gamma` is 0.5 and `beta` can be anywhere between 0 and 0.5 with a recommended value of 0.25 according to the above reference.
 
 ### Damping
 
-To reduce stress oscillation in this explicit code, artificial damping is implemented. Setting `dampingFlag` as 1 will add damping to the equation of motion.
+To reduce stress oscillation in this explicit code, artificial damping is implemented. This damping method is usually known as [Cundall damping](https://elib.uni-stuttgart.de/handle/11682/513).
+
+Setting `dampingFlag` as `1` will add damping to the equation of motion.
 
 A `dampingRatio` parameter is required with a recommended value is between 0.02 and 0.05.
-
-This damping method is usually known as [Cundall damping](https://elib.uni-stuttgart.de/handle/11682/513).
 
 
 ## Mesh
@@ -123,7 +124,7 @@ xNN yNN zNN = Node NN
 `NPE` refers to the number of nodes per element. 
 
 
-`n1_1, n1_2... n1_NPE` correspons to which nodes make up each element using the unwritten Node `ID`'s.
+`n1_1, n1_2... n1_NPE` corresponds to which nodes make up each element using the unwritten Node `ID`'s.
 
 An example of the single element `element_testing/inputFiles/mesh.smf` mesh file is given below.
 
@@ -236,9 +237,9 @@ Note: The order in which the points are written corresponds to their `Point ID`,
 
 ### Initial Stress
 
-The 6 component Voigt Stress Notation is being used in this file. More information can be found in [Voight Notation](https://en.wikipedia.org/wiki/Voigt_notation).
+The 6 component Voigt Stress Notation is being used in this file. More information can be found in [Voigt Notation](https://en.wikipedia.org/wiki/Voigt_notation).
 
-This file is typically generated by an outside code, but must contain the following format:
+This file is typically generated by an [outside code](https://github.com/cb-geo/mpm-point-generator), but must contain the following format:
 
 ```
 Np
@@ -270,7 +271,7 @@ Note: That the `Point ID` must start at `0` not 1, and the `Np` of this file sho
 
 ### Traction
 
-In MPM, traction or external forces are applied on the points (not to nodes of the mesh like FEM). The format of the file should be like the following:
+In MPM, traction or external forces are applied on the points (not to nodes of the mesh like Finite Element Method). The format of the file should be like the following:
 
 ```
 NTP            \n
@@ -278,10 +279,15 @@ p_1     d_1    tp_1    \n
 ...                    \n
 p_NTP   d_NTP  tp_NTP  \n
 ```
-where `NTP` is the number of traction particles in this file, which are used to give traction forces in the `d_i` direction. 
+
+`NTP` is the number of traction particles in this file, which are used to give traction forces in the `d_i` direction.
+
 `p_i` is the particle id, 
+
 `d_i` is the direction number (0|1|2) of traction force. 
+
 `tp_i` is the traction pressure. 
+
 `NTP` is the number of particles with traction pressures.
 
 
