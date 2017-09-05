@@ -164,7 +164,6 @@ n_NGC   d_NGC
 n_1     dn_1     sdn_1
 ...
 n_NFC   dn_NFC   sdn_NFC
-
 ```
 
 
@@ -247,14 +246,13 @@ NTP            \n
 p_1     d_1    tp_1    \n
 ...                    \n
 p_NTP   d_NTP  tp_NTP  \n
+```
+where `NTP` is the number of traction particles in this file, which are used to give traction forces in the `d_i` direction. 
+`p_i` is the particle id, 
+`d_i` is the direction number (0|1|2) of traction force. 
+`tp_i` is the traction pressure. 
+`NTP` is the number of particles with traction pressures.
 
-where NTP is the number of traction particles in this file, which are used
-to give traction forces in the d_i direction. 
-p_i is the particle id, 
-d_i is the direction number (0|1|2) of traction force. 
-tp_i is the traction pressure. 
-NTP is the number of particles with traction pressures.
-``` 
 
 An example in the `element_testing/inputFiles/Traction.dat` is shown below.
 
