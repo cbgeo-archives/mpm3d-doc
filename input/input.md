@@ -6,7 +6,7 @@ A consistent system of units must be maintained in this code. All values input i
 http://www.idac.co.uk/services/downloads/consistent.pdf.
 
 
-##Dimensions
+## Dimensions
 To run in 2D uncomment `line 15` (`// #define _MPM2D_  // Toggle between MPM2D and 3D Analysis`) from `MpmItems.hpp` prior to compiling the code. For 3D, leave this line commented out and compile as normal.
 
 
@@ -19,7 +19,7 @@ A series of input files are required to run the `mpm-3d` code, a description of 
 
 # Input Files
 
-##Input dat
+## Input.dat
 
 An `input.dat` file within the `inputFiles` folder is required to provide the code with the location of the other necessary files.
 
@@ -68,13 +68,13 @@ dampingRatio                   0.05
 Note: Spacing must have units concordant with those used for density and the geometry of the model, the density input is described later.
 
 
-#### Newmark Integration
+### Newmark Integration
 
 Setting `newmarkMethod` as 1 will integrate velocity and displacement using the Newmark-beta method (1959). The details of the mathematics can be seen at: https://en.wikipedia.org/wiki/Newmark-beta_method. 
 
 In this method, two extra parameters are required, i.e., `gamma` and `beta`. A reasonable value of `gamma` is 0.5 and `beta` can be anywhere between 0 and 0.5 with a recommended value of 0.25.
 
-#### Damping
+### Damping
 
 To reduce stress oscillation in this explicit code, artificial damping is implemented. Setting `dampingFlag` as 1 will add damping to the equation of motion.
 
