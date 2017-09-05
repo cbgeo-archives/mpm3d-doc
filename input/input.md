@@ -232,7 +232,7 @@ An example of the `element_testing/inputFiles/soilParticles.dat` file is shown b
 In this file there are a total of 4 points.
 
 
-Note: The order in which the points are written corresponds to their `Point ID`, which is used to calculate stresses. 
+> **Note** The order in which the points are written corresponds to their `Point ID`, which is used to calculate stresses. 
 
 
 
@@ -254,7 +254,6 @@ Where `Np` is the number of nodes and `s1_i s2_i s3_i s4_i s5_i s6_i` is the Voi
 
 `ID_i` corresponds to the unwritten `Point ID` of each point, as determined by the order in which they are written in the `Soil Particles` file.
 
-
 An example of the `element_testing/inputFiles/initStressSoilP.dat` file is shown below.
 
 ```
@@ -267,7 +266,7 @@ An example of the `element_testing/inputFiles/initStressSoilP.dat` file is shown
 
 In this case there are 4 points with no initial stresses set.
 
-Note: That the `Point ID` must start at `0` not 1, and the `Np` of this file should match that of the `Soil Particles` file, otherwise an erorr will occur.
+> **Note** The `Point ID` must start at `0` not 1, and the `Np` of this file should match that of the `Soil Particles` file, otherwise an erorr will occur.
 
 
 ### Traction
