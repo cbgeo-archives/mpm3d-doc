@@ -7,23 +7,22 @@ http://www.idac.co.uk/services/downloads/consistent.pdf.
 
 
 ## Dimensions
-To run in 2D uncomment `line 15` (`// #define _MPM2D_  // Toggle between MPM2D and 3D Analysis`) from `MpmItems.hpp` prior to compiling the code. For 3D, leave this line commented out and compile as normal.
-
+To switch between the 2D and 3D implementation of `mpm-3d` code, uncomment or comment `#define _MPM2D_ ` in [MpmItems.hpp](https://github.com/cb-geo/mpm-3d/blob/master/cartesian/src/MpmItems.hpp#L15). `#define _MPM2D_` enables 2D, uncommenting the line enables the 3D version.
 
 ## Directory
 
 Each new problem must have a new folder (eg.`element_testing`) within this folder the input files must be located in a seperate folder entitiled `inputFiles`. By default, problem folders are assumed to be located in a `bin` folder, giving `bin/element_testing/inputFiles`. The command `./mpm -f element_testing` will direct the code to the `element_testing` folder and run the input files located within it.
 
-A series of input files are required to run the `mpm-3d` code, a description of each is provided below.
+`mpm-3d` requires a collection of input files, a description of each is provided below.
 
 
 # Input Files
 
 ## Input.dat
 
-An `input.dat` file within the `inputFiles` folder is required to provide the code with the location of the other necessary files.
+An `input.dat` file provides the location of the other necessary files.
 
-An example of the required format is given below for a problem titled `element_testing`.
+An example of the requirsamaed format is given below for a problem titled `element_testing`.
 
 ```
 inputMeshFileName              element_testing/inputFiles/mesh.smf
@@ -70,7 +69,7 @@ Note: Spacing must have units concordant with those used for density and the geo
 
 ### Newmark Integration
 
-Setting `newmarkMethod` as 1 will integrate velocity and displacement using the Newmark-beta method (1959). The details of the mathematics can be seen at: https://en.wikipedia.org/wiki/Newmark-beta_method. 
+Setting `newmarkMethod` as 1 will integrate velocity and displacement using the Newmark-beta method (1959). See [Newmark Beta method](https://en.wikipedia.org/wiki/Newmark-beta_method)
 
 In this method, two extra parameters are required, i.e., `gamma` and `beta`. A reasonable value of `gamma` is 0.5 and `beta` can be anywhere between 0 and 0.5 with a recommended value of 0.25.
 
@@ -80,7 +79,7 @@ To reduce stress oscillation in this explicit code, artificial damping is implem
 
 A `dampingRatio` parameter is required with a recommended value is between 0.02 and 0.05.
 
-Reference to this method could be obtained from: https://elib.uni-stuttgart.de/handle/11682/513.
+Reference to this method could be obtained from [Culham damping](https://elib.uni-stuttgart.de/handle/11682/513).
 
 
 ## Mesh
