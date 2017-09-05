@@ -1,6 +1,13 @@
 # Preprocessing
 
-To run in 2D uncomment `line 15` (`// #define _MPM2D_  // Toggle between MPM2D and 3D Analysis`) from `MpmItems.hpp`. For 3D, leave this line commented out.
+## Units
+A consistent system of units must be maintained in this code. All values input into the code with units must follow a system from the table in the following link:
+
+http://www.idac.co.uk/services/downloads/consistent.pdf.
+
+
+##Dimensions
+To run in 2D uncomment `line 15` (`// #define _MPM2D_  // Toggle between MPM2D and 3D Analysis`) from `MpmItems.hpp` prior to compiling the code. For 3D, leave this line commented out and compile as normal.
 
 
 ## Directory
@@ -51,9 +58,15 @@ dampingRatio                   0.05
 
 `boundaryFrictionMiu` determines the friction coefficient, ranging from `0` to `1`.
 
-`soilParticleSpacing` is used to calculate the mass of a point, using: `mass = soilParticleSpacing  * soilParticleSpacing  * soilParticleSpacing  * density` for a 3D model.
-
 `timeInterval` determines the time-step in seconds and `numberOfSteps` determines the number of steps. `numberOfSubStepsOS ` is the number of substeps.
+
+
+### Spacing
+
+`soilParticleSpacing` is used to calculate the mass of a point, using: `mass = soilParticleSpacing  * soilParticleSpacing  * soilParticleSpacing  * density` for a 3D model. 
+
+Note: Spacing must have units concordant with those used for density and the geometry of the model, the density input is described later.
+
 
 #### Newmark Integration
 
@@ -144,21 +157,31 @@ In the example of element testing, there would not be any submesh used. Therefor
 The boundary constraints are specified and the file has to have the following format:
 
 ```
-NGC     NFC    \n
-n_1     d_1    \n
-...            \n
-n_NGC   d_NGC  \n
-n_1     dn_1     sdn_1     \n
-...                        \n
-n_NFC   dn_NFC   sdn_NFC   \n
+NGC     NFC
+n_1     d_1
+...
+n_NGC   d_NGC
+n_1     dn_1     sdn_1
+...
+n_NFC   dn_NFC   sdn_NFC
 
-where NGC is the number of general constraints in this file, which are used to set velocity and acceleration components in the d_i direction to be zero. 
-n_i is the node number, d_i is the direction number (0|1|2) NFC is the number of friction constraints, which are used to limit the acceleration in the tangential direction to boundary. 
-n_i is the node number, dn_i is the perpendicular direction to boundary (0|1|2). 
-sdn_i is the sign (+1/-1) of dn_i w.r.t coordinate system ( i.e. =-1 if bottom of mesh boundary )
- ```
+```
 
-An example in the `element_testing/inputFiles/mesh.constraints` is shown below.
+
+`NGC` is the number general constraints set on nodes within in this file. General constraints are used to set velocity and acceleration components in the `d_i` direction to zero.
+This will reduce point movement in the `d_i` direction the closer it is to that node.
+
+`NFC` is the number of frictional constraints set on nodes within this file. These nodes are used to limit the acceleration in the tangential direction to boundary using the frictional algorithm and the fricional coefficiant `boundaryFrictionMiu`.
+
+`n_i` is the node number.
+
+`d_i` is the direction number `(0|1|2)` that corresponds to a cartesian direction, typically `(x|y|z)`.
+
+`dn_i` is the perpendicular direction to friction boundary in the form of the direction number `(0|1|2)`. 
+
+`sdn_i` is the `sign` `(+1/-1)` of `dn_i` with reference to the coordinate syste (i.e.=-1 if bottom of mesh boundary)
+
+An example of the `element_testing/inputFiles/mesh.constraints` is shown below.
 
 ```
 4 4
@@ -171,6 +194,7 @@ An example in the `element_testing/inputFiles/mesh.constraints` is shown below.
 1 0 1
 3 0 1
 ```
+In this case, there are 4 general constraints set on nodes and 4 frictional constraints. Multiple constraints can be set on nodes, for instance: `Node 0` has constraints in both the `0` direction and the `1` direction. 
 
 
 ## Soil Particles (Points)
@@ -272,6 +296,5 @@ MohrCoulomb {
 
 ## Notes
 
-### Units
-This code uses a consistent system of units. The table in the following link provides examples of the sets of units: http://www.idac.co.uk/services/downloads/consistent.pdf.
+
 
