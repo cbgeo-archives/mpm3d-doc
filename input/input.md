@@ -69,9 +69,9 @@ Note: Spacing must have units concordant with those used for density and the geo
 
 ### Newmark Integration
 
-Setting `newmarkMethod` as 1 will integrate velocity and displacement using the Newmark-beta method (1959). See [Newmark Beta method](https://en.wikipedia.org/wiki/Newmark-beta_method)
+Setting `newmarkMethod` as 1 will integrate velocity and displacement using the Newmark-beta method (1959). See [Newmark Beta method](https://en.wikipedia.org/wiki/Newmark-beta_method).
 .
-In this method, two extra parameters are required, i.e., `gamma` and `beta`. A reasonable value of `gamma` is 0.5 and `beta` can be anywhere between 0 and 0.5 with a recommended value of 0.25.
+In this method, two extra parameters are required, i.e., `gamma` and `beta`. A reasonable value of `gamma` is 0.5 and `beta` can be anywhere between 0 and 0.5 with a recommended value of 0.25 according to the above reference.
 
 ### Damping
 
@@ -79,14 +79,14 @@ To reduce stress oscillation in this explicit code, artificial damping is implem
 
 A `dampingRatio` parameter is required with a recommended value is between 0.02 and 0.05.
 
-Reference to this method could be obtained from [Culham damping](https://elib.uni-stuttgart.de/handle/11682/513).
+This damping method is usually known as [Cundall damping](https://elib.uni-stuttgart.de/handle/11682/513).
 
 
 ## Mesh
 
 In MPM, the background mesh is an important component of the method. Data stored in the points are mapped to the nodes of the mesh where computations are performed.
 
-Note that a mesh generator code is usually used to make the mesh files inputs including the submesh and the constraints. `cb-geo` has a [mesh generator](https://github.com/cb-geo/mpm-mesh-generator-old) that is usually used.
+Note that a mesh generator code is usually used to make the mesh files inputs including the submesh and the constraints. Note that `cb-geo` has a [mesh generator](https://github.com/cb-geo/mpm-mesh-generator-old) that is usually used.
 
 ### Mesh File
 
@@ -109,7 +109,7 @@ nNE_1 nNE_2 ... nNE_NPE
  
 `x_i, y_i,z_i` correspond to the Cartesian coordinates of each node. 
 
-The `ID` of each node from `0-NN` will be the order in which they written.eg:
+The `ID` of each node from `0-NN` will be the order in which they written, e.g.:
 
 
 ```
@@ -213,6 +213,8 @@ Where Np is the total number of points and `x_i y_i z_i` corresponds to the cart
 
 For a 2D case, the `z_i` coordinate must be set to 0.
 
+`cb-geo` has a [point generator](https://github.com/cb-geo/mpm-point-generator) that is usually used.
+
 Note: The best practice for point locations is to avoid points being located on the nodes of the background mesh or element boundaries.
 
 An example of the `element_testing/inputFiles/soilParticles.dat` file is shown below.
@@ -227,7 +229,6 @@ An example of the `element_testing/inputFiles/soilParticles.dat` file is shown b
 
 In this file there are a total of 4 points.
 
-`cb-geo` has a [point generator](https://github.com/cb-geo/mpm-point-generator) that is usually used.
 
 Note: The order in which the points are written corresponds to their `Point ID`, which is used to calculate stresses. 
 
