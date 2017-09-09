@@ -10,10 +10,10 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
        a.
 
 3. Update the Momenta at nodes
-       $$ ((mv)_I)^(t+\delta t) = ((mv)_I)^t + f_I \delta t $$
-```
-\\[ x = {-b \pm \sqrt{b^2-4ac} \over 2a} \\]
-```
+       $ ((mv)_I)^(t+\delta t) = ((mv)_I)^t + f_I \delta t $
+
+Testing inline $x$
+
 
 \\[ x = {-b \pm \sqrt{b^2-4ac} \over 2a} \\]
 
