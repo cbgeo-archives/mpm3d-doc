@@ -10,19 +10,16 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
        a.
 
 3. Update the Momenta at nodes
-       \\() ((mv)_I)^(t+\delta t) = ((mv)_I)^t + f_I \delta t \\)
+       \\( ((mv)_I)^(t+\delta t) = ((mv)_I)^t + f_I \delta t \\)
 
 4. Mapping from nodes to particles
 
 5. Reset the grid (if it was updated) and advance to the next time step
 
+> **Note** MPM stores information at the particles and not at the nodes as it is in Finite Element Method.
 
 ## Nomenclature
 
-
-
-
-> **Note** MPM stores information at the particles and not at the nodes as it is in Finite Element Method.
 
 
 # Reference
