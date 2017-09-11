@@ -29,7 +29,7 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
         1. Compute strain
             $$ (\varepsilon_I^t) = \Sigma_I B_I v_I $$
 
-        1. Update stress (depending on constitutive model)
+        1. Update stress ($d\sigma_I$ depending on constitutive model)
             $$ \sigma_I^(t+1) = \sigma_I^t + d\sigma_I $$
 
         1. Assign force to nodes
