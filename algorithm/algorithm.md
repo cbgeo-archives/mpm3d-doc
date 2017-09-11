@@ -28,10 +28,10 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
               $$ (f_I)^(int,t) = -\Sigma V_p \sigma_p \grad N_I (x_p) $$
       h. Compute nodal force
               $$ f_I = (f_I)^(ext) + (f_I)^(int)  $$
-
+   
    B. Update the Momenta at nodes
               $$((mv)_I)^(t+\delta t) = ((mv)_I)^t + f_I \delta t$$
-
+   
    C. Mapping from nodes to particles
       a. Update particle velocities
          i. Normal Implementation
