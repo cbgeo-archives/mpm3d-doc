@@ -19,13 +19,13 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
     1. Mapping from particles to nodes 
 
         1. Compute nodal mass 
-            $$ (mv)_I^t = \Sigma_p N_I(x_p)^t M_p $$
+            $$ m_I^t = \Sigma_p N_I(x_p^t) M_p $$
 
         1. Compute nodal momentum
-            $$ (mv)_I^t = \Sigma_p N_I(x_p)^t ((Mv)_p)^t $$
+            $$ mv_I^t = \Sigma_p N_I(x_p^t) Mv_p $$
 
         1. Compute nodal velocities
-            $$ (v_I)^t = ((mv)_I)^t /over (m_I)^t   $$
+            $$ v_I^t = mv_I^t \over m_I^t $$
 
         1. Compute gradient velocity
             $$   $$
@@ -39,8 +39,6 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
         1. Update stress
             $$ (\sigma_p)^t = (\sigma_p)^t + \delta (\sigma_p)^t   $$
 
-> **Note** This MPM code is implementing Update Stress First (USF). The other option is to do Update Stress Last (USL). It is done by moving this block of code to the bottom after the particle velocities and displacements have been updated.
-
         1. Compute external force
             $$ (f_I)^(ext,t)  $$
 
@@ -50,6 +48,7 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
         1. Compute nodal force
             $$ f_I = (f_I)^(ext) + (f_I)^(int)  $$
 
+> **Note** This MPM code is implementing Update Stress First (USF). The other option is to do Update Stress Last (USL). It is done by moving this block of code to the bottom after the particle velocities and displacements have been updated.
 
    
     1. Update the Momenta at nodes
@@ -78,11 +77,15 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
 ## Nomenclature
 
 
-$M_p$ mass at particle $p$ 
+$M_p^t$ mass of particle $p$ at time $t$
 
-$N_I$ shape function with independent variable $x_p^t$
+$Mv_p^t$ momentum of particle $p$ at time $t$
 
-$v_p$ velocity of 
+$N_I$ shape function with independent variable $\textbf{x}_p^t$
+
+$v_I^t$ velocity of node $I$ at time $t$ 
+
+$v_p^t$ velocity of particle $p$ at time $t$ 
 
 $V_p$ volume at particle $p$
 
