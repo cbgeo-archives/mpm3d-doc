@@ -4,10 +4,11 @@
 
 The Material Point Method (MPM) algorithm comprises of 3 major parts.
 
+> **Note** This method computes particle mass in the initialization. Even though the density is updated later, the mass is conserved.
+
 1. Initialization
     a. Read all input files and store necessary information
     a. Compute mass of each particle $$ m_I = \gamma V_I $$
-> **Note** This method computes particle mass in the initialization. Even though the density is updated later, the mass is conserved.
 1. Solution phase for time step $t$ to $t + \delta t$
     a. Compute 
     a. Compute nodal mass $$ ((mv)_I)^t = \Sigma_p N_I(x_p)^t M_p $$
