@@ -6,9 +6,19 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
 
 1. Initialization
 
-2. Solution phase for time step $t$ to $t + \delta t$
+    a. Read all input files and store necessary information
 
-    a. Compute nodal mass 
+    b. Compute mass of each particle
+        $$ m_I = \gamma V_I $$
+
+> **Note** This method computes particle mass in the initialization. Even though the density is updated later, the mass is conserved.
+
+
+1. Solution phase for time step $t$ to $t + \delta t$
+
+    a. Compute 
+
+    b. Compute nodal mass 
         $$ ((mv)_I)^t = \Sigma_p N_I(x_p)^t M_p $$
 
     b. Compute nodal momentum
@@ -28,6 +38,9 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
 
     g. Update stress
         $$ (\sigma_p)^t = (\sigma_p)^t + \delta (\sigma_p)^t   $$
+
+> **Note** This MPM code is implementing Update Stress First (USF). The other option is to do Update Stress Last (USL). It is done by moving this block of code to the bottom after the particle velocities and displacements have been updated.
+
 
     h. Compute external force
         $$ (f_I)^(ext,t)  $$
@@ -53,7 +66,9 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
 
         ii. Newmark Integration
 
-3. Reset the grid (if it was updated) and advance to the next time step
+1. Reset the grid (if it was updated) and advance to the next time step
+
+1. Generate output files (.vtk) for each sub time step
 
 > **Note** MPM stores information at the particles and not at the nodes as it is in Finite Element Method.
 
