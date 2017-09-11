@@ -22,27 +22,25 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
             $$ mv_I^t = \Sigma_p N_I(x_p^t) Mv_p $$
 
         1. Compute nodal velocities
-            $$ v_I^t = mv_I^t \over m_I^t $$
-            $$ v_I^t = mv_I^t\overm_I^t $$
             $$ v_I^t = \frac{mv_I^t}{m_I^t} $$
 
         1. Compute strain
             $$ (\varepsilon_I^t) = \Sigma_I B_I v_I $$
 
-        1. Update stress ($d\sigma_I$ depending on constitutive model)
-            $$ \sigma_I^(t+1) = \sigma_I^t + d\sigma_I $$
+        1. Update stress ($d\sigma_I$ depends on constitutive model)
+            $$ \sigma_I^{t+1} = \sigma_I^t + d\sigma_I $$
 
         1. Assign force to nodes
             $$ f_I = \Sigma_p M_p a_p  $$
 
         1. Compute external force from traction and body force
-            $$ (f_I)^(ext,t) $$
+            $$ (f_I)^{ext,t} $$
 
         1. Compute internal force
-            $$ (f_I)^(int,t) $$
+            $$ (f_I)^{int,t} $$
 
         1. Compute nodal force
-            $$ f_I = (f_I)^(ext) + (f_I)^(int)  $$
+            $$ f_I = (f_I)^{ext} + (f_I)^{ext}  $$
 
         1. Compute nodal acceleration
             $$ a_I = f_I / m_I $$
@@ -55,8 +53,6 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
 
         1. Update volume
             $$   $$
-
-
 
     1. Update the Momenta at nodes
         $$((mv)_I)^(t+\delta t) = ((mv)_I)^t + f_I \delta t$$
@@ -114,4 +110,4 @@ $\textbf{x}_p^t$ coordinate vector of particle $p$ at time $t$
 
 $\gamma$ density of particle
 
-$\textbf{\varepsilon}_I^t$ strain of node $I$ at time $t$
+$\boldsymbol{\varepsilon}_I^t$ strain of node $I$ at time $t$
