@@ -6,10 +6,10 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
 
 1. Initialization
 
-2. Solution phase for time step $$t$$ to $$t + \delta t$$
+2. Solution phase for time step $t$ to $t + \delta t$
 
-       A. Mapping from particles to nodes
-              a. Compute nodal mass 
+A. Mapping from particles to nodes
+       a. Compute nodal mass 
                      $$ ((mv)_I)^t = \Sigma_p N_I(x_p)^t M_p $$
               b. Compute nodal momentum
                      $$ ((mv)_I)^t = \Sigma_p N_I(x_p)^t ((Mv)_p)^t $$
