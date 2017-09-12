@@ -33,14 +33,17 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
     1. Update stress ($\Delta\sigma_I^{t+\Delta t}$ depends on constitutive model)
         $$ \boldsymbol{\sigma}_I^{t+\Delta t} = \boldsymbol{\sigma}_I^t + d\Delta\boldsymbol{\sigma}_I^{t+\Delta t} $$
 
-    1. Assign force to nodes from previous step 
-        $$ \textbf{f}_I^{t+\Delta t} = \Sigma_p M_p \textbf{a}_p^{t+\Delta t}  $$
+    1. Assign force to nodes from previous step (for Newmark integration)
+        $$ \textbf{f}_I^t = \Sigma_p N_I(\textbf{x}_p^t) M_p \textbf{a}_p^t  $$
 
-    1. Compute traction at nodes from particles
-        $$ \textbf{t}_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) \frac{m_I^{t+\Delta t}}{\gamma} \frac{\textbf{t}_p^{t+\Delta t}}{sp_p} $$
+    1. Compute nodal acceleration from previous step (for Newmark integration)
+        $$ \textbf{a}_I^t = \frac{\textbf{f}_I^{t}}{m_I^t} $$  $$
 
     1. Compute body force at nodes from particles
         $$ \textbf{b}_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) M_p G $$
+
+    1. Compute traction at nodes from particles
+        $$ \textbf{t}_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) \frac{m_I^{t+\Delta t}}{\gamma} \frac{\textbf{t}_p^{t+\Delta t}}{sp_p} $$
 
     1. Compute external force
         $$ (\textbf{f}_I)^{ext,t+\Delta t} = \textbf{b}_I^{t+\Delta t} + \textbf{t}_I^{t+\Delta t} $$
