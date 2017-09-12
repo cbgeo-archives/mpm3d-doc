@@ -23,16 +23,16 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
         $$ \textbf{v}_I^t = \frac{m\textbf{v}_I^t}{m_I^t} $$
 
     1. Compute strain
-        $$ (\varepsilon_I^t) = \Sigma_I B_I \textbf{v}_I $$
+        $$ (\boldsymbol{\varepsilon}_I^t) = \Sigma_I B_I \textbf{v}_I $$
 
-    1. Update stress ($d\sigma_I$ depends on constitutive model)
+    1. Update stress ($\Delta\sigma_I$ depends on constitutive model)
         $$ \boldsymbol{\sigma}_I^{t+1} = \boldsymbol{\sigma}_I^t + d\boldsymbol{\sigma}_I $$
 
     1. Assign force to nodes from previous step 
         $$ \textbf{f}_I = \Sigma_p M_p \textbf{a}_p  $$
 
     1. Compute traction at nodes from particles
-        $$ \textbf{t}_I^t = \Sigma_p N_I(\textbf{x}_p^t) \frac{m_I^t}{\gamma} \frac{\textbf{t}_p^t}{sp_p} 
+        $$ \textbf{t}_I^t = \Sigma_p N_I(\textbf{x}_p^t) \frac{m_I^t}{\gamma} \frac{\textbf{t}_p^t}{sp_p} $$
 
     1. Compute body force at nodes from particles
         $$ \textbf{b}_I^t = \Sigma_p N_I(\textbf{x}_p^t) M_p^t G $$
