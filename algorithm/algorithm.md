@@ -5,15 +5,15 @@
 The Material Point Method (MPM) algorithm comprises of 4 major parts.
 
 > **Note** 
-> * MPM stores information at the particles and not at the nodes as it is in Finite Element Method. This includes the application of traction at the particles, not at the nodes.
-> * The code is implementing Update Stress First (USF). The other option is to do Update Stress Last (USL). It is done by moving this block of code to the bottom after the particle velocities and displacements have been updated.
-> * The code computes particle mass in the initialization. Even though the density is updated later, the mass is conserved.
+> * MPM stores information at the material points and not at the nodes as it is in Finite Element Method. This includes the application of traction at the particles, not at the nodes.
+> * The code is implementing Update Stress First (USF). The other option is to do Update Stress Last (USL). It is done by moving this block of code to the bottom after the material points velocities and displacements have been updated.
+> * The code computes material points mass in the initialization. Even though the density is updated later, the mass is conserved.
 
 1. Initialization
 
     1. Read all input files and store necessary information
 
-    1. Compute mass of each particle
+    1. Compute mass of each material points
         $$ M_p = \gamma V_p $$
 
 1. Solution phase for time step $t$ to $t + \Delta t$
@@ -37,12 +37,12 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
         $$ \textbf{f}_I^t = \Sigma_p N_I(\textbf{x}_p^t) M_p \textbf{a}_p^t  $$
 
     1. Compute nodal acceleration from previous step (for Newmark integration)
-        $$ \textbf{a}_I^t = \frac{\textbf{f}_I^{t}}{m_I^t} $$  $$
-
-    1. Compute body force at nodes from particles
+        $$ \textbf{a}_I^t = \frac{\textbf{f}_I^{t}}{m_I^t} $$
+        
+    1. Compute body force at nodes from material points
         $$ \textbf{b}_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) M_p G $$
 
-    1. Compute traction at nodes from particles
+    1. Compute traction at nodes from material points
         $$ \textbf{t}_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) \frac{m_I^{t+\Delta t}}{\gamma} \frac{\textbf{t}_p^{t+\Delta t}}{sp_p} $$
 
     1. Compute external force
@@ -66,16 +66,16 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
     1. Update soil density
         $$ \gamma = \frac{\gamma}{1 + \varepsilon_v} $$
 
-    1. Update particle acceleration
+    1. Update material points acceleration
         $$ \textbf{a}_I^{t+\Delta t} = N_I(\textbf{x}_p^t) \textbf{a}_I^{t+\Delta t} $$
 
-    1. Update particle velocity
+    1. Update material points velocity
         1. Normal Integration
             $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t  \textbf{a}_I^{t+\Delta t} $$
         1. Newmark Integration
             $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^{t} + (1-\gamma_N) \Delta t \textbf{a}_p^t + \gamma_N \Delta t \textbf{a}_p^{t+\Delta t} $$
 
-    1. Update particle position
+    1. Update material points position
         1. Normal Integration
             $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_p^{t+\Delta t} $$
         1. Newmark Integration
@@ -83,14 +83,14 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
 
 1. Reset the grid mesh (if it was updated) and advance to the next time step
 
-1. Generate output files (.vtk) for each sub time step
+1. Generate output files (.vtk) for each sub time step 
 
 
 ## Nomenclature
 
-$\textbf{a}_I^t$ acceleration of particle $I$
+$\textbf{a}_I^t$ acceleration of material point $I$
 
-$\textbf{a}_p^t$ acceleration of particle $p$ at time $t$
+$\textbf{a}_p^t$ acceleration of material point $p$ at time $t$
 
 $\textbf{b}_I^t$ body force of node $I$
 
@@ -106,31 +106,31 @@ $G$ gravity acceleration ($G = 9.81 m/s^2$)
 
 $m_I^t$ mass of node $I$ at time $t$
 
-$M_p^t$ mass of particle $p$ at time $t$
+$M_p^t$ mass of material point $p$ at time $t$
 
 $m\textbf{v}_I^t$ momentum of node $I$ at time $t$
 
-$M\textbf{v}_p^t$ momentum of particle $p$ at time $t$
+$M\textbf{v}_p^t$ momentum of material point $p$ at time $t$
 
-$N_I (\textbf{x}_p^t) $ shape function with independent variable of the location of each particle at time $t$
+$N_I (\textbf{x}_p^t) $ shape function with independent variable of the location of each material point at time $t$
 
-$sp_p$ spacing between particles
+$sp_p$ spacing between material points
 
 $\textbf{t}_I^t$ traction at node $I$
 
-$\textbf{t}_p^t$ traction at particle $p$
+$\textbf{t}_p^t$ traction at material point $p$
 
 $\textbf{v}_I^t $ velocity of node $I$ at time $t$
 
-$\textbf{v}_p^t$ velocity of particle $p$ at time $t$ 
+$\textbf{v}_p^t$ velocity of material point $p$ at time $t$ 
 
-$V_p$ volume at particle $p$
+$V_p$ volume at material points $p$
 
-$\textbf{x}_p^t$ coordinate vector of particle $p$ at time $t$
+$\textbf{x}_p^t$ coordinate vector of material point $p$ at time $t$
 
 $\beta_N$ parameter for Newmark integration
 
-$\gamma$ density of particle
+$\gamma$ density of material point
 
 $\gamma_N$ parameter for Newmark integration
 
