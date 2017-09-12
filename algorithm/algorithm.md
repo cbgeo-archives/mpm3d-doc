@@ -58,22 +58,25 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
         1. Normal Integration
             $$ \textbf{v}_I^{t+\Delta t} = \textbf{v}_I^{t} + \Delta t \textbf{a}_I^{t+\Delta t} $$
         1. Newmark Integration
-            $$ \textbf{v}_I^{t+\Delta t} = \textbf{v}_I^{t} + \Delta t (1-\gamma_N) textbf{a}_I^t + \Delta t \gamma_N textbf{a}_I^{t+\Delta t} $$
+            $$ \textbf{v}_I^{t+\Delta t} = \textbf{v}_I^{t} + \Delta t (1-\gamma_N) \textbf{a}_I^t + \Delta t \gamma_N \textbf{a}_I^{t+\Delta t} $$
 
     1. Update soil density
         $$ \gamma = \frac{\gamma}{1 + \varepsilon_v} $$
 
-    1. Update particle velocities.
-        1. Normal Integration
-            $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t N_I(\textbf{x}_p^t) \textbf{a}_I^{t+\Delta t} $$
-        1. Newmark Integration
-            $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^{t} + \Delta t (1-\gamma_N) textbf{a}_p^t + \Delta t \gamma_N textbf{a}_p^{t+\Delta t} $$
+    1. Update particle acceleration
+        $$ \textbf{a}_I^{t+\Delta t} = N_I(\textbf{x}_p^t) textbf{a}_I^{t+\Delta t} $$
 
-    1. Update particle positions.
+    1. Update particle velocity
         1. Normal Integration
-            $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t N_I \textbf{v}_I^{t+\Delta t} $$
+            $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t  \textbf{a}_I^{t+\Delta t} $$
         1. Newmark Integration
-            $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t N_I \textbf{v}_I^t + \frac{1-2\beta}{2} {\Delta t}^2 textbf{a}_p^t + \beta {\Delta t}^2 textbf{a}_p^{t+Delta t} $$
+            $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^{t} + \Delta t (1-\gamma_N) \textbf{a}_p^t + \Delta t \gamma_N \textbf{a}_p^{t+\Delta t} $$
+
+    1. Update particle position
+        1. Normal Integration
+            $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_I^{t+\Delta t} $$
+        1. Newmark Integration
+            $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_I^t + \frac{1-2\beta}{2} {\Delta t}^2 \textbf{a}_p^t + \beta {\Delta t}^2 \textbf{a}_p^{t+\Delta t} $$
 
 1. Reset the grid (if it was updated) and advance to the next time step
 
