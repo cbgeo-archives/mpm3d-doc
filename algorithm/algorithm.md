@@ -47,19 +47,19 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
         $$ \textbf{f}_I^t = (\textbf{f}_I)^{int,t} + (\textbf{f}_I)^{ext,t}  $$
 
     1. Compute nodal acceleration
-        $$ \textbf{a}_I^t = \textbf{f}_I^t / m_I^t $$
+        $$ \textbf{a}_I^t = \frac{\textbf{f}_I^t}{m_I^t} $$
 
     1. Compute nodal velocity (normal integration). Note that Newmark integration could also be used
-        $$ \textbf{v}_I^{t+\Delta t} = \textbf{v}_I^{t} + dt \textbf{a}_I^{t+\Delta t}
+        $$ \textbf{v}_I^{t+\Delta t} = \textbf{v}_I^{t} + \Delta t \textbf{a}_I^{t+\Delta t} $$
 
     1. Update soil density
         $$ \gamma = \frac{\gamma}{1 + \varepsilon_v} $$
 
     1. Update particle velocities. Note that Newmark integration could also be used
-        $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + dt N_I(\textbf{x}_p^t) \textbf{a}_I^{t+\Delta t} $$
+        $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t N_I(\textbf{x}_p^t) \textbf{a}_I^{t+\Delta t} $$
 
     1. Update particle positions. Note that Newmark integration could also be used
-        $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + dt N_I \textbf{v}_I^{t+\Delta t} $$
+        $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t N_I \textbf{v}_I^{t+\Delta t} $$
 
 1. Reset the grid (if it was updated) and advance to the next time step
 
@@ -114,6 +114,8 @@ $V_p$ volume at particle $p$
 $\textbf{x}_p^t$ coordinate vector of particle $p$ at time $t$
 
 $\gamma$ density of particle
+
+$\varepsilon_I^tv$ volumetric strain of node $I$ at time $t$
 
 $\boldsymbol{\varepsilon}_I^t$ strain of node $I$ at time $t$
 
