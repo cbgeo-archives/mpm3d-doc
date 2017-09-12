@@ -14,62 +14,61 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
 1. Solution phase for time step $t$ to $t + \delta t$
 
     1. Compute nodal mass 
-        $$ m_I^t = \Sigma_p N_I(x_p^t) M_p $$
+        $$ m_I^t = \Sigma_p N_I(\textbf{x}_p^t) M_p $$
 
     1. Compute nodal momentum
-        $$ mv_I^t = \Sigma_p N_I(x_p^t) Mv_p $$
+        $$ m\textbf{v}_I^t = \Sigma_p N_I(\textbf{x}_p^t) M\textbf{v}_p $$
 
     1. Compute nodal velocities
-        $$ v_I^t = \frac{mv_I^t}{m_I^t} $$
+        $$ \textbf{v}_I^t = \frac{m\textbf{v}_I^t}{m_I^t} $$
 
     1. Compute strain
-        $$ (\varepsilon_I^t) = \Sigma_I B_I v_I $$
+        $$ (\varepsilon_I^t) = \Sigma_I B_I \textbf{v}_I $$
 
     1. Update stress ($d\sigma_I$ depends on constitutive model)
-        $$ \sigma_I^{t+1} = \sigma_I^t + d\sigma_I $$
+        $$ \boldsymbol{\sigma}_I^{t+1} = \boldsymbol{\sigma}_I^t + d\boldsymbol{\sigma}_I $$
 
     1. Assign force to nodes from previous step 
-        $$ f_I = \Sigma_p M_p a_p  $$
+        $$ \textbf{f}_I = \Sigma_p M_p \textbf{a}_p  $$
 
     1. Compute traction at nodes from particles
-        $$ t_I^t = \Sigma_p N_I \frac{m_I^t}{\gamma} \frac{t_p^t}{spacing_p} 
+        $$ \textbf{t}_I^t = \Sigma_p N_I(\textbf{x}_p^t) \frac{m_I^t}{\gamma} \frac{\textbf{t}_p^t}{sp_p} 
 
     1. Compute body force at nodes from particles
-       $$ b_I^t = \Sigma_p N_I M_p^t G $$
+        $$ \textbf{b}_I^t = \Sigma_p N_I(\textbf{x}_p^t) M_p^t G $$
 
     1. Compute external force
-       $$ (f_I)^{ext,t} = b_I + t_I $$
+        $$ (\textbf{f}_I)^{ext,t} = \textbf{b}_I^t + \textbf{t}_I^t $$
 
     1. Compute internal force
-       $$ (\textbf{f}_I)^{int,t} = \Sigma_I \frac{m_I^t}{\gamma} B_I $\boldsymbol{\sigma}_I $$
+        $$ (\textbf{f}_I)^{int,t} = \Sigma_I \frac{m_I^t}{\gamma} B_I $\boldsymbol{\sigma}_I $$
 
     1. Compute nodal force
-       $$ \textbf{f}_I^t = (\textbf{f}_I)^{int,t} + (\textbf{f}_I)^{ext,t}  $$
+        $$ \textbf{f}_I^t = (\textbf{f}_I)^{int,t} + (\textbf{f}_I)^{ext,t}  $$
 
     1. Compute nodal acceleration
-       $$ \textbf{a}_I^t = \textbf{f}_I^t / m_I^t $$
+        $$ \textbf{a}_I^t = \textbf{f}_I^t / m_I^t $$
 
     1. Compute nodal velocity (normal integration). Note that Newmark integration could also be used
-       $$ \textbf{v}_I^{t+1} = \textbf{v}_I^{t} + dt \textbf{a}_I^{t+1}
+        $$ \textbf{v}_I^{t+\delta t} = \textbf{v}_I^{t} + dt \textbf{a}_I^{t+\delta t}
 
     1. Update soil density
         $$ \gamma = \frac{\gamma}{1 + \varepsilon_v} $$
 
     1. Update particle velocities. Note that Newmark integration could also be used
-        $$ \textbf{v}_p^{t+1} = \textbf{v}_p^t + dt N_I \textbf{a}_I^{t+1} $$
+        $$ \textbf{v}_p^{t+dt} = \textbf{v}_p^t + dt N_I(\textbf{x}_p^t) \textbf{a}_I^{t+\delta t} $$
 
     1. Update particle positions. Note that Newmark integration could also be used
-        $$ \textbf{x}_p^{t+1} = \textbf{x}_p^t + dt N_I \textbf{v}_I^{t+1} $$
+        $$ \textbf{x}_p^{t+dt} = \textbf{x}_p^t + dt N_I \textbf{v}_I^{t+\delta t} $$
 
 1. Reset the grid (if it was updated) and advance to the next time step
 
 1. Generate output files (.vtk) for each sub time step
 
-> **Note** MPM stores information at the particles and not at the nodes as it is in Finite Element Method. This includes the application of traction at the particles, not at the nodes.
-
-> **Note** This method computes particle mass in the initialization. Even though the density is updated later, the mass is conserved.
-
-> **Note** This MPM code is implementing Update Stress First (USF). The other option is to do Update Stress Last (USL). It is done by moving this block of code to the bottom after the particle velocities and displacements have been updated.
+> **Note** 
+> * MPM stores information at the particles and not at the nodes as it is in Finite Element Method. This includes the application of traction at the particles, not at the nodes.
+> * The code is implementing Update Stress First (USF). The other option is to do Update Stress Last (USL). It is done by moving this block of code to the bottom after the particle velocities and displacements have been updated.
+> * The code computes particle mass in the initialization. Even though the density is updated later, the mass is conserved.
 
 
 ## Nomenclature
@@ -100,7 +99,7 @@ $Mv_p^t$ momentum of particle $p$ at time $t$
 
 $N_I$ shape function with independent variable $\textbf{x}_p^t$
 
-$spacing_p$ spacing between particles
+$sp_s$ spacing between particles
 
 $\textbf{t}_I^t$ traction at node $I$
 
@@ -117,3 +116,5 @@ $\textbf{x}_p^t$ coordinate vector of particle $p$ at time $t$
 $\gamma$ density of particle
 
 $\boldsymbol{\varepsilon}_I^t$ strain of node $I$ at time $t$
+
+$\boldsymbol{\sigma}_I^t$ stress of node $I$ at time $t$
