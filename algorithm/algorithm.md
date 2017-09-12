@@ -11,7 +11,7 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
     1. Compute mass of each particle
         $$ M_p = \gamma V_p $$
 
-1. Solution phase for time step $t$ to $t + \delta t$
+1. Solution phase for time step $t$ to $t + \Delta t$
 
     1. Compute nodal mass 
         $$ m_I^t = \Sigma_p N_I(\textbf{x}_p^t) M_p $$
@@ -50,16 +50,16 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
         $$ \textbf{a}_I^t = \textbf{f}_I^t / m_I^t $$
 
     1. Compute nodal velocity (normal integration). Note that Newmark integration could also be used
-        $$ \textbf{v}_I^{t+\delta t} = \textbf{v}_I^{t} + dt \textbf{a}_I^{t+\delta t}
+        $$ \textbf{v}_I^{t+\Delta t} = \textbf{v}_I^{t} + dt \textbf{a}_I^{t+\Delta t}
 
     1. Update soil density
         $$ \gamma = \frac{\gamma}{1 + \varepsilon_v} $$
 
     1. Update particle velocities. Note that Newmark integration could also be used
-        $$ \textbf{v}_p^{t+dt} = \textbf{v}_p^t + dt N_I(\textbf{x}_p^t) \textbf{a}_I^{t+\delta t} $$
+        $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + dt N_I(\textbf{x}_p^t) \textbf{a}_I^{t+\Delta t} $$
 
     1. Update particle positions. Note that Newmark integration could also be used
-        $$ \textbf{x}_p^{t+dt} = \textbf{x}_p^t + dt N_I \textbf{v}_I^{t+\delta t} $$
+        $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + dt N_I \textbf{v}_I^{t+\Delta t} $$
 
 1. Reset the grid (if it was updated) and advance to the next time step
 
@@ -93,9 +93,9 @@ $m_I^t$ mass of node $I$ at time $t$
 
 $M_p^t$ mass of particle $p$ at time $t$
 
-$mv_I^t$ momentum of node $I$ at time $t$
+$m\textbf{v}_I^t$ momentum of node $I$ at time $t$
 
-$Mv_p^t$ momentum of particle $p$ at time $t$
+$M\textbf{v}_p^t$ momentum of particle $p$ at time $t$
 
 $N_I$ shape function with independent variable $\textbf{x}_p^t$
 
