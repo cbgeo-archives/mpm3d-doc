@@ -94,7 +94,7 @@ $\textbf{a}_p^t$ acceleration of particle $p$ at time $t$
 
 $\textbf{b}_I^t$ body force of node $I$
 
-$B_I$ gradient of the shape function such that $B = \frac{dN}{d\textbf{x}}$
+$B_I (\textbf{x}_p^t)$ gradient of the shape function such that $B = \frac{dN}{d\textbf{x}}$
 
 $\textbf{f}_I^t$ nodal force of node $I$ at time $t$
 
