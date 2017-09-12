@@ -64,7 +64,7 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
         $$ \gamma = \frac{\gamma}{1 + \varepsilon_v} $$
 
     1. Update particle acceleration
-        $$ \textbf{a}_I^{t+\Delta t} = N_I(\textbf{x}_p^t) textbf{a}_I^{t+\Delta t} $$
+        $$ \textbf{a}_I^{t+\Delta t} = N_I(\textbf{x}_p^t) \textbf{a}_I^{t+\Delta t} $$
 
     1. Update particle velocity
         1. Normal Integration
@@ -74,9 +74,9 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
 
     1. Update particle position
         1. Normal Integration
-            $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_I^{t+\Delta t} $$
+            $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_p^{t+\Delta t} $$
         1. Newmark Integration
-            $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_I^t + \frac{1-2\beta_N}{2} {\Delta t}^2 \textbf{a}_p^t + \beta_N {\Delta t}^2 \textbf{a}_p^{t+\Delta t} $$
+            $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_p^t + \frac{1-2\beta_N}{2} {\Delta t}^2 \textbf{a}_p^t + \beta_N {\Delta t}^2 \textbf{a}_p^{t+\Delta t} $$
 
 1. Reset the grid mesh (if it was updated) and advance to the next time step
 
@@ -109,9 +109,9 @@ $m\textbf{v}_I^t$ momentum of node $I$ at time $t$
 
 $M\textbf{v}_p^t$ momentum of particle $p$ at time $t$
 
-$N_I$ shape function with independent variable $\textbf{x}_p^t$
+$N_I (\textbf{x}_p^t) $ shape function with independent variable of the location of each particle at time $t$
 
-$sp_s$ spacing between particles
+$sp_p$ spacing between particles
 
 $\textbf{t}_I^t$ traction at node $I$
 
