@@ -28,10 +28,10 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
         $$ \textbf{v}_I^{t+\Delta t} = \frac{m\textbf{v}_I^{t+\Delta t}}{m_I^{t+\Delta t}} $$
 
     1. Compute strain
-        $$ (\boldsymbol{\varepsilon}_I^{t+\Delta t}) = \Sigma_I B_I \textbf{v}_I^{t+\Delta t} $$
+        $$ (\boldsymbol{\varepsilon}_p^{t+\Delta t}) = \Sigma_I B_I(\textbf{x}_p^t) \textbf{v}_I^{t+\Delta t} $$
 
-    1. Update stress ($\Delta\sigma_I^{t+\Delta t}$ depends on constitutive model)
-        $$ \boldsymbol{\sigma}_I^{t+\Delta t} = \boldsymbol{\sigma}_I^t + d\Delta\boldsymbol{\sigma}_I^{t+\Delta t} $$
+    1. Update stress ($\Delta\sigma_p^{t+\Delta t}$ depends on constitutive model)
+        $$ \boldsymbol{\sigma}_p^{t+\Delta t} = \boldsymbol{\sigma}_p^t + \Delta \boldsymbol{\sigma}_p^{t+\Delta t} $$
 
     1. Assign force to nodes from previous step (for Newmark integration)
         $$ \textbf{f}_I^t = \Sigma_p N_I(\textbf{x}_p^t) M_p \textbf{a}_p^t  $$
