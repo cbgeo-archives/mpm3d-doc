@@ -2,7 +2,12 @@
 
 ## Main Algorithm
 
-The Material Point Method (MPM) algorithm comprises of 3 major parts.
+The Material Point Method (MPM) algorithm comprises of 4 major parts.
+
+> **Note** 
+> * MPM stores information at the particles and not at the nodes as it is in Finite Element Method. This includes the application of traction at the particles, not at the nodes.
+> * The code is implementing Update Stress First (USF). The other option is to do Update Stress Last (USL). It is done by moving this block of code to the bottom after the particle velocities and displacements have been updated.
+> * The code computes particle mass in the initialization. Even though the density is updated later, the mass is conserved.
 
 1. Initialization
 
@@ -14,40 +19,40 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
 1. Solution phase for time step $t$ to $t + \Delta t$
 
     1. Compute nodal mass 
-        $$ m_I^t = \Sigma_p N_I(\textbf{x}_p^t) M_p $$
+        $$ m_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) M_p $$
 
     1. Compute nodal momentum
-        $$ m\textbf{v}_I^t = \Sigma_p N_I(\textbf{x}_p^t) M\textbf{v}_p $$
+        $$ m\textbf{v}_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) M\textbf{v}_p $$
 
     1. Compute nodal velocities
-        $$ \textbf{v}_I^t = \frac{m\textbf{v}_I^t}{m_I^t} $$
+        $$ \textbf{v}_I^{t+\Delta t} = \frac{m\textbf{v}_I^{t+\Delta t}}{m_I^{t+\Delta t}} $$
 
     1. Compute strain
-        $$ (\boldsymbol{\varepsilon}_I^t) = \Sigma_I B_I \textbf{v}_I $$
+        $$ (\boldsymbol{\varepsilon}_I^{t+\Delta t}) = \Sigma_I B_I \textbf{v}_I^{t+\Delta t} $$
 
-    1. Update stress ($\Delta\sigma_I$ depends on constitutive model)
-        $$ \boldsymbol{\sigma}_I^{t+1} = \boldsymbol{\sigma}_I^t + d\boldsymbol{\sigma}_I $$
+    1. Update stress ($\Delta\sigma_I^{t+\Delta t}$ depends on constitutive model)
+        $$ \boldsymbol{\sigma}_I^{t+\Delta t} = \boldsymbol{\sigma}_I^t + d\Delta\boldsymbol{\sigma}_I^{t+\Delta t} $$
 
     1. Assign force to nodes from previous step 
-        $$ \textbf{f}_I = \Sigma_p M_p \textbf{a}_p  $$
+        $$ \textbf{f}_I^{t+\Delta t} = \Sigma_p M_p \textbf{a}_p^{t+\Delta t}  $$
 
     1. Compute traction at nodes from particles
-        $$ \textbf{t}_I^t = \Sigma_p N_I(\textbf{x}_p^t) \frac{m_I^t}{\gamma} \frac{\textbf{t}_p^t}{sp_p} $$
+        $$ \textbf{t}_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) \frac{m_I^{t+\Delta t}}{\gamma} \frac{\textbf{t}_p^{t+\Delta t}}{sp_p} $$
 
     1. Compute body force at nodes from particles
-        $$ \textbf{b}_I^t = \Sigma_p N_I(\textbf{x}_p^t) M_p^t G $$
+        $$ \textbf{b}_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) M_p G $$
 
     1. Compute external force
-        $$ (\textbf{f}_I)^{ext,t} = \textbf{b}_I^t + \textbf{t}_I^t $$
+        $$ (\textbf{f}_I)^{ext,t+\Delta t} = \textbf{b}_I^{t+\Delta t} + \textbf{t}_I^{t+\Delta t} $$
 
     1. Compute internal force
-        $$ (\textbf{f}_I)^{int,t} = \Sigma_I \frac{m_I^t}{\gamma} B_I $\boldsymbol{\sigma}_I $$
+        $$ (\textbf{f}_I)^{int,t+\Delta t} = \Sigma_I \frac{m_I^{t+\Delta t}}{\gamma} B_I \boldsymbol{\sigma}_I^{t+\Delta t} $$
 
     1. Compute nodal force
-        $$ \textbf{f}_I^t = (\textbf{f}_I)^{int,t} + (\textbf{f}_I)^{ext,t}  $$
+        $$ \textbf{f}_I^{t+\Delta t} = (\textbf{f}_I)^{int,t+\Delta t} + (\textbf{f}_I)^{ext,t+\Delta t}  $$
 
     1. Compute nodal acceleration
-        $$ \textbf{a}_I^t = \frac{\textbf{f}_I^t}{m_I^t} $$
+        $$ \textbf{a}_I^{t+\Delta t} = \frac{\textbf{f}_I^{t+\Delta t}}{m_I^t} $$
 
     1. Compute nodal velocity (normal integration). Note that Newmark integration could also be used
         $$ \textbf{v}_I^{t+\Delta t} = \textbf{v}_I^{t} + \Delta t \textbf{a}_I^{t+\Delta t} $$
@@ -64,11 +69,6 @@ The Material Point Method (MPM) algorithm comprises of 3 major parts.
 1. Reset the grid (if it was updated) and advance to the next time step
 
 1. Generate output files (.vtk) for each sub time step
-
-> **Note** 
-> * MPM stores information at the particles and not at the nodes as it is in Finite Element Method. This includes the application of traction at the particles, not at the nodes.
-> * The code is implementing Update Stress First (USF). The other option is to do Update Stress Last (USL). It is done by moving this block of code to the bottom after the particle velocities and displacements have been updated.
-> * The code computes particle mass in the initialization. Even though the density is updated later, the mass is conserved.
 
 
 ## Nomenclature
