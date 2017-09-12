@@ -13,7 +13,7 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
 
     1. Read all input files and store necessary information
 
-    1. Compute mass of each material points
+    1. Compute mass of each material point
         $$ M_p = \gamma V_p $$
 
 1. Solution phase for time step $t$ to $t + \Delta t$
@@ -38,7 +38,7 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
 
     1. Compute nodal acceleration from previous step (for Newmark integration)
         $$ \textbf{a}_I^t = \frac{\textbf{f}_I^{t}}{m_I^t} $$
-        
+
     1. Compute body force at nodes from material points
         $$ \textbf{b}_I^{t+\Delta t} = \Sigma_p N_I(\textbf{x}_p^t) M_p G $$
 
