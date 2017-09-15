@@ -19,16 +19,16 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
 1. Solution phase for time step $t$ to $t + \Delta t$
 
     1. Compute nodal mass 
-        $$ m_i^{t+\Delta t} = \Sigma_p N_ip(\textbf{x}_p^t) m_p $$
+        $$ m_i^{t+\Delta t} = \Sigma_p N_{ip}(\textbf{x}_p^t) m_p $$
 
     1. Compute nodal momentum
-        $$ m\textbf{v}_i^{t+\Delta t} = \Sigma_p N_ip(\textbf{x}_p^t) m\textbf{v}_p $$
+        $$ m\textbf{v}_i^{t+\Delta t} = \Sigma_p N_{ip}(\textbf{x}_p^t) m\textbf{v}_p $$
 
     1. Compute nodal velocities
         $$ \textbf{v}_i^{t+\Delta t} = \frac{m\textbf{v}_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
 
     1. Compute strain from previous time-step
-        $$ \boldsymbol{\varepsilon}_p^t = \Sigma_i B_ip(\textbf{x}_p^t) \textbf{v}_i^t $$
+        $$ \boldsymbol{\varepsilon}_p^t = \Sigma_i B_{ip}(\textbf{x}_p^t) \textbf{v}_i^t $$
 
     1. Update stress from previous time-step ($\Delta\sigma_p^t$ depends on constitutive model)
         $$ \boldsymbol{\sigma}_p^t = \boldsymbol{\sigma}_p^{t-\Delta t} + \Delta \boldsymbol{\sigma}_p^t $$
@@ -40,16 +40,16 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
         $$ \textbf{a}_i^t = \frac{\textbf{f}_i^{t}}{m_i^t} $$
 
     1. Compute body force at nodes from material points
-        $$ \textbf{b}_i^{t+\Delta t} = \Sigma_p N_ip(\textbf{x}_p^t) m_p G $$
+        $$ \textbf{b}_i^{t+\Delta t} = \Sigma_p N_{ip}(\textbf{x}_p^t) m_p G $$
 
     1. Compute traction at nodes from material points
-        $$ \textbf{t}_i^{t+\Delta t} = \Sigma_p N_ip(\textbf{x}_p^t) \frac{m_I^{t+\Delta t}}{\gamma} \frac{\textbf{t}_p^{t+\Delta t}}{s_p} $$
+        $$ \textbf{t}_i^{t+\Delta t} = \Sigma_p N_{ip}(\textbf{x}_p^t) \frac{m_I^{t+\Delta t}}{\gamma} \frac{\textbf{t}_p^{t+\Delta t}}{s_p} $$
 
     1. Compute external force
         $$ (\textbf{f}_i)^{ext,t+\Delta t} = \textbf{b}_i^{t+\Delta t} + \textbf{t}_i^{t+\Delta t} $$
 
     1. Compute internal force
-        $$ (\textbf{f}_i)^{int,t+\Delta t} = \Sigma_i \frac{m_i^{t+\Delta t}}{\gamma} B_ip \boldsymbol{\sigma}_i^{t+\Delta t} $$
+        $$ (\textbf{f}_i)^{int,t+\Delta t} = \Sigma_i B_{ip} \frac{m_i^{t+\Delta t}}{\gamma} \boldsymbol{\sigma}_i^{t+\Delta t} $$
 
     1. Compute nodal force
         $$ \textbf{f}_i^{t+\Delta t} = (\textbf{f}_i)^{int,t+\Delta t} + (\textbf{f}_i)^{ext,t+\Delta t}  $$
@@ -67,11 +67,11 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
         $$ \gamma = \frac{\gamma}{1 + \varepsilon_{v,p}} $$
 
     1. Update material points acceleration
-        $$ \textbf{a}_p^{t+\Delta t} = N_ip(\textbf{x}_p^t) \textbf{a}_i^{t+\Delta t} $$
+        $$ \textbf{a}_p^{t+\Delta t} = \Sigma_i N_{ip}(\textbf{x}_p^t) \textbf{a}_i^{t+\Delta t} $$
 
     1. Update material points velocity
         1. Mapping from nodal velocity
-            $$ \textbf{v}_p^{t+\Delta t} = N_ip(\textbf{x}_p^t) \textbf{v}_i^{t+\Delta t} $$
+            $$ \textbf{v}_p^{t+\Delta t} = \Sigma_i N_{ip}(\textbf{x}_p^t) \textbf{v}_i^{t+\Delta t} $$
 
         1. Normal Integration
             $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t  \textbf{a}_I^{t+\Delta t} $$
@@ -97,7 +97,7 @@ $\textbf{a}_p^t$ acceleration of material point $p$ at time $t$
 
 $\textbf{b}_i^t$ body force of node $i$
 
-$B_ip (\textbf{x}_p^t)$ gradient of the shape function that maps node $i$ to material point $p$ and vice versa such that $B = \frac{dN}{d\textbf{x}}$
+$B_{ip} (\textbf{x}_p^t)$ gradient of the shape function that maps node $i$ to material point $p$ and vice versa such that $B = \frac{dN}{d\textbf{x}}$
 
 $\textbf{f}_i^t$ nodal force of node $i$ at time $t$
 
@@ -115,7 +115,7 @@ $m\textbf{v}_i^t$ momentum of node $i$ at time $t$
 
 $m\textbf{v}_p^t$ momentum of material point $p$ at time $t$
 
-$N_ip (\textbf{x}_p^t) $ shape function that maps node $i$ to material point $p$ and vice versa with independent variable of the location of each material point at time $t$
+$N_{ip} (\textbf{x}_p^t) $ shape function that maps node $i$ to material point $p$ and vice versa with independent variable of the location of each material point at time $t$
 
 $s_p$ spacing between material points
 
