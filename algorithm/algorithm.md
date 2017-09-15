@@ -64,7 +64,7 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
             $$ \textbf{v}_i^{t+\Delta t} = \textbf{v}_i^{t} + \Delta t (1-\gamma_N) \textbf{a}_i^t + \Delta t \gamma_N \textbf{a}_i^{t+\Delta t} $$
 
     1. Update soil density
-        $$ \gamma = \frac{\gamma}{1 + \varepsilon_{v,p} $$
+        $$ \gamma = \frac{\gamma}{1 + \varepsilon_{v,p}} $$
 
     1. Update material points acceleration
         $$ \textbf{a}_p^{t+\Delta t} = N_ip(\textbf{x}_p^t) \textbf{a}_i^{t+\Delta t} $$
