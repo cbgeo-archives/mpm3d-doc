@@ -71,7 +71,7 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
 
     1. Update material points velocity
         1. Mapping from nodal velocity
-            $$ \textbf{v}_p^{t+\Delta t} = \Sigma_i N_{ip} \textbf{x}_p^t) \textbf{v}_i^{t+\Delta t} $$
+            $$ \textbf{v}_p^{t+\Delta t} = \Sigma_i N_[ip] \textbf{x}_p^t) \textbf{v}_i^{t+\Delta t} $$
 
         1. Normal Integration
             $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t  \textbf{a}_I^{t+\Delta t} $$
