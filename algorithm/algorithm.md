@@ -23,6 +23,8 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
 
     1. Compute nodal momentum
         $$ m\textbf{v}_i^{t+\Delta t} = \Sigma_p N_{ip}(\textbf{x}_p^t) m\textbf{v}_p $$
+        $$ m_i^{t+\Delta t} = \Sigma_p N_{ip}(\textbf{x}_p^t) m_p $$
+
 
     1. Compute nodal velocities
         $$ \textbf{v}_i^{t+\Delta t} = \frac{m\textbf{v}_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
