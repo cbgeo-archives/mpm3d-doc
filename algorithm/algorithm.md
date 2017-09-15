@@ -67,11 +67,11 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
         $$ \gamma = \frac{\gamma}{1 + \varepsilon_{v,p}} $$
 
     1. Update material points acceleration
-        $$ \textbf{a}_p^{t+\Delta t} = \Sigma_i N_{ip}(\textbf{x}_p^t) \textbf{a}_i^{t+\Delta t} $$
+        $$ \textbf{a}_p^{t+\Delta t} = \Sigma_i N_i(\textbf{x}_p^t) \textbf{a}_i^{t+\Delta t} $$
 
     1. Update material points velocity
         1. Mapping from nodal velocity
-            $$ \textbf{v}_p^{t+\Delta t} = \Sigma_i N_{ip}(\textbf{x}_p^t) \textbf{v}_i^{t+\Delta t} $$
+            $$ \textbf{v}_p^{t+\Delta t} = \Sigma_i N_i(\textbf{x}_p^t) \textbf{v}_i^{t+\Delta t} $$
 
         1. Normal Integration
             $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t  \textbf{a}_I^{t+\Delta t} $$
@@ -82,6 +82,7 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
     1. Update material points position
         1. Normal Integration
             $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_p^{t+\Delta t} $$
+
         1. Newmark Integration
             $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_p^t + \frac{1-2\beta_N}{2} {\Delta t}^2 \textbf{a}_p^t + \beta_N {\Delta t}^2 \textbf{a}_p^{t+\Delta t} $$
 
@@ -98,7 +99,7 @@ $\textbf{a}_p^t$ acceleration of material point $p$ at time $t$
 
 $\textbf{b}_i^t$ body force of node $i$
 
-$B_{ip} (\textbf{x}_p^t)$ gradient of the shape function that maps node $i$ to material point $p$ and vice versa such that $B = \frac{dN}{d\textbf{x}}$
+$B_i (\textbf{x}_p^t)$ gradient of the shape function that maps node $i$ to material point $p$ and vice versa such that $B = \frac{dN}{d\textbf{x}}$
 
 $\textbf{f}_i^t$ nodal force of node $i$ at time $t$
 
@@ -116,7 +117,7 @@ $m\textbf{v}_i^t$ momentum of node $i$ at time $t$
 
 $m\textbf{v}_p^t$ momentum of material point $p$ at time $t$
 
-$N_{ip} (\textbf{x}_p^t) $ shape function that maps node $i$ to material point $p$ and vice versa with independent variable of the location of each material point at time $t$
+$N_i (\textbf{x}_p^t) $ shape function that maps node $i$ to material point $p$ and vice versa with independent variable of the location of each material point at time $t$
 
 $s_p$ spacing between material points
 
