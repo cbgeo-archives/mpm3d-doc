@@ -2,36 +2,38 @@
 
 ## Main Algorithm
 
-The Material Point Method (MPM) algorithm comprises of 4 major parts.
-
-> **Note** 
-> * MPM stores information at the material points and not at the nodes as it is in Finite Element Method. This includes the application of traction at the particles, not at the nodes.
-> * The code is implementing Modified Update Stress Last (MUSF). The other option is to do Update Stress First (USF) or to do traditional Update Stress last. It is done by moving this block of code to the bottom after the material points velocities and displacements have been updated.
-> * The code computes material points mass in the initialization. Even though the density is updated later, the mass is conserved.
+The Material Point Method (MPM) algorithm comprises of 4 stages.
 
 1. Initialization
 
-    1. Read all input files and store necessary information
+    1. A continuum body is discretized into a finite set of material points corresponding to the original configuration of the body. The number of material points corresponds to the resolution of the mesh size adopted in the Finite Element Method. The material points are followed throughout the deformation of the material, which is a Lagrangian description of the motion.
+    
+    1. An arbitrary computational grid is initialized to describe the natural coordinates of the material points. For the purpose of simplicity, a Cartesian grid is usually adopted.
 
-    1. Compute mass of each material point
+    1. The state variables (mass/density, velocity, strain, stress, other material parameters corresponding to the adopted constitutive relation) are initialized at every material point.
+
+    1. Mass of each material point is computed based on the density and initial volume. The initial volume is computed based on the material point spacing. The code assumes uniform spacing in all directions. Although the density of material points are updated, the mass is conserved.
+
         $$ m_p = \gamma V_p $$
 
 1. Solution phase for time step $t$ to $t + \Delta t$
 
     1. Compute nodal mass 
-        $$ m_i^{t+\Delta t} = \Sigma_p N_i(\textbf{x}_p^t) m_p $$
+        $$ m_i^t = \sum\limits_{p=1}^{N_P} N_i(\textbf{x}_p^t) m_p $$
 
     1. Compute nodal momentum
-        $$ m\textbf{v}_i^{t+\Delta t} = \Sigma_p N_i(\textbf{x}_p^t) m\textbf{v}_p $$
+        $$ m_i \textbf{v}_i^{t+\Delta t} = \Sigma_p N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
 
     1. Compute nodal velocities
-        $$ \textbf{v}_i^{t+\Delta t} = \frac{m\textbf{v}_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
+        $$ \textbf{v}_i^{t+\Delta t} = \frac{m_i \textbf{v}_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
 
     1. Compute strain from previous time-step
         $$ \boldsymbol{\varepsilon}_p^t = \Sigma_i B_i(\textbf{x}_p^t) \textbf{v}_i^t $$
 
     1. Update stress from previous time-step ($\Delta\sigma_p^t$ depends on constitutive model)
         $$ \boldsymbol{\sigma}_p^t = \boldsymbol{\sigma}_p^{t-\Delta t} + \Delta \boldsymbol{\sigma}_p^t $$
+
+        $$ \Delta\sigma_p^(t+\Delta t) = \mathbf{D} : \Delta \epsilon_p^{t+\Delta t} $$
 
     1. Assign force to nodes from previous step (for Newmark integration)
         $$ \textbf{f}_i^t = \Sigma_p N_i(\textbf{x}_p^t) m_p \textbf{a}_p^t  $$
@@ -65,7 +67,7 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
             $$ \textbf{v}_i^{t+\Delta t} = \textbf{v}_i^{t} + \Delta t (1-\gamma_N) \textbf{a}_i^t + \Delta t \gamma_N \textbf{a}_i^{t+\Delta t} $$
 
     1. Update soil density
-        $$ \gamma = \frac{\gamma}{1 + \varepsilon_{v,p}} $$
+        $$ \rho = \frac{\rho}{1 + \varepsilon_{v,p}} $$
 
     1. Update material points acceleration
         $$ \textbf{a}_p^{t+\Delta t} = \Sigma_i N_i(\textbf{x}_p^t) \textbf{a}_i^{t+\Delta t} $$
@@ -87,9 +89,14 @@ The Material Point Method (MPM) algorithm comprises of 4 major parts.
         1. Newmark Integration
             $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_p^t + \frac{1-2\beta_N}{2} {\Delta t}^2 \textbf{a}_p^t + \beta_N {\Delta t}^2 \textbf{a}_p^{t+\Delta t} $$
 
-1. Reset the grid mesh (if it was updated) and advance to the next time step
+1. At the end of every time step, all the variables on the grid nodes are initialized to zero. The material points carry all the information about the solution, and the computational grid is re-initialiszd for the next step.
 
 1. Generate output files (.vtk) for each sub time step  
+
+> **Note** 
+> * MPM stores information at the material points and not at the nodes as it is in the Finite Element Method. This includes the application of traction at the material points, not at the nodes.
+> * The code uses Modified Update Stress Last (MUSL). It is done by moving this block of code to the bottom after the material points velocities and displacements have been updated.
+> * The code computes material points mass in the initialization. Even though the density is updated later, the mass is conserved.
 
 
 ## Nomenclature
@@ -136,11 +143,11 @@ $\textbf{x}_p^t$ coordinate vector of material point $p$ at time $t$
 
 $\beta_N$ parameter for Newmark integration
 
-$\gamma$ density of material point
-
 $\gamma_N$ parameter for Newmark integration
 
 $\varepsilon_{v,p}^t$ volumetric strain of particle $p$ at time $t$
+
+$\rho$ density of material point
 
 $\boldsymbol{\varepsilon}_i^t$ strain of node $i$ at time $t$
 
