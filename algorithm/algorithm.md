@@ -22,7 +22,7 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
         $$ m_i^t = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p $$
 
     1. Compute nodal momentum     
-        $$ (m \textbf{v})_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
+        $$ (m \textbf{v})_i^{t+\Delta t} =  N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
 
     1. Compute nodal velocities
         $$ \textbf{v}_i^{t+\Delta t} = \frac{ (m\textbf{v})_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
