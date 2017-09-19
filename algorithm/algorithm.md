@@ -16,13 +16,13 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
 
         $$ m_p = \rho V_p $$
 
-1. Solution phase for time step $$ t $$ to $$ t + \Delta t $$
+1. Solution phase for time step $$t$$ to $$t + \Delta t$$
 
     1. Compute nodal mass 
         $$ m_i^t = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p $$
 
-    1. Compute nodal momentum
-        $$ (m\textbf{v})_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
+    1. Compute nodal momentum     
+        $$ (m \textbf{v})_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
 
     1. Compute nodal velocities
         $$ \textbf{v}_i^{t+\Delta t} = \frac{ (m\textbf{v})_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
@@ -101,56 +101,67 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
 
 ## Nomenclature
 
-$\textbf{a}_i^t$ acceleration of node $i$
+### General
 
-$\textbf{a}_p^t$ acceleration of material point $p$ at time $t$
+$$G$$ gravity acceleration ($$G = 9.81 m/s^2$$)
 
-$\textbf{b}_i^t$ body force of node $i$
+$$\beta_N$$ parameter for Newmark integration
 
-$B_i (\textbf{x}_p^t)$ gradient of the shape function that maps node $i$ to material point $p$ and vice versa such that $B = \frac{dN}{d\textbf{x}}$
+$$\gamma_N$$ parameter for Newmark integration
 
-$\textbf{f}_i^t$ nodal force of node $i$ at time $t$
 
-$\textbf{f}_i^{ext,t}$ nodal external force of node $i$ at time $t$
+### Material Point
 
-$\textbf{f}_i^{int,t}$ nodal internal force of node $i$ at time $t$
+$$\textbf{a}_p^t$$ acceleration of material point $$p$$ at time $$t$$
 
-$G$ gravity acceleration ($G = 9.81 m/s^2$)
+$$m_p^t$$ mass of material point $$p$$ at time $$t$$
 
-$m_i^t$ mass of node $i$ at time $t$
+$$m\textbf{v}_p^t$$ momentum of material point $$p$$ at time $$t$$
 
-$m_p^t$ mass of material point $p$ at time $t$
+$$n_p$$ total number of material points in the body
 
-$m\textbf{v}_i^t$ momentum of node $i$ at time $t$
+$$s_p$$ spacing between material points
 
-$m\textbf{v}_p^t$ momentum of material point $p$ at time $t$
+$$\textbf{t}_p^t$$ traction at material point $$p$$
 
-$n_p$ total number of material points in the body
+$$\textbf{v}_p^t$$ velocity of material point $p$ at time $$t$$
 
-$N_i (\textbf{x}_p^t) $ shape function that maps node $i$ to material point $p$ and vice versa with independent variable of the location of each material point at time $t$
+$$V_p$$ volume at material points $$p$$
 
-$s_p$ spacing between material points
+$$\textbf{x}_p^t$$ coordinate vector of material point $$p$$ at time $$t$$
 
-$\textbf{t}_i^t$ traction at node $i$
+$$\varepsilon_{v,p}^t$$ volumetric strain of particle $$p$$ at time $$t$$
 
-$\textbf{t}_p^t$ traction at material point $p$
+$$\rho$$ density of material point
 
-$\textbf{v}_i^t $ velocity of node $i$ at time $t$
 
-$\textbf{v}_p^t$ velocity of material point $p$ at time $t$ 
+### Node
 
-$V_p$ volume at material points $p$
+$$\textbf{a}_i^t$$ acceleration of node $$i$$
 
-$\textbf{x}_p^t$ coordinate vector of material point $p$ at time $t$
+$$\textbf{b}_i^t$$ body force of node $$i$$
 
-$\beta_N$ parameter for Newmark integration
+$$\textbf{f}_i^t$$ nodal force of node $$i$$ at time $$t$$
 
-$\gamma_N$ parameter for Newmark integration
+$$\textbf{f}_i^{ext,t}$$ nodal external force of node $$i$$ at time $$t$$
 
-$\varepsilon_{v,p}^t$ volumetric strain of particle $p$ at time $t$
+$$\textbf{f}_i^{int,t}$$ nodal internal force of node $$i$$ at time $$t$$
 
-$\rho$ density of material point
+$$m_i^t$$ mass of node $$i$$ at time $$t$$
 
-$\boldsymbol{\varepsilon}_i^t$ strain of node $i$ at time $t$
+$$m\textbf{v}_i^t$$ momentum of node $$i$$ at time $t$
 
-$\boldsymbol{\sigma}_i^t$ stress of node $i$ at time $t$
+$$\textbf{t}_i^t$$ traction at node $$i$$
+
+$$\textbf{v}_i^t$$ velocity of node $$i$$ at time $$t$$
+
+$$\boldsymbol{\varepsilon}_i^t$$ strain of node $$i$$ at time $$t$$
+
+$$\boldsymbol{\sigma}_i^t$$ stress of node $$i$$ at time $$t$$
+
+
+### Shape Functions
+
+$$B_i (\textbf{x}_p^t)$$ gradient of the shape function that maps node $$i$$ to material point $$p$$ and vice versa such that $B = \frac{dN}{d\textbf{x}}$
+
+$$N_i (\textbf{x}_p^t)$$ shape function that maps node $i$ to material point $$p$$ and vice versa with independent variable of the location of each material point at time $$t$$
