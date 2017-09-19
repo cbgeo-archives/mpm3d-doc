@@ -4,28 +4,28 @@
 
 The Material Point Method (MPM) algorithm comprises of 4 stages.
 
-1. Initialization
+1. Initialisation
 
-    1. A continuum body is discretized into a finite set of material points corresponding to the original configuration of the body. The number of material points corresponds to the resolution of the mesh size adopted in the Finite Element Method. The material points are followed throughout the deformation of the material, which is a Lagrangian description of the motion.
+    1. A continuum body is discretised into a finite set of material points corresponding to the original configuration of the body. The number of material points corresponds to the resolution of the mesh size adopted in the Finite Element Method. The material points are followed throughout the deformation of the material, which is a Lagrangian description of the motion.
     
-    1. An arbitrary computational grid is initialized to describe the natural coordinates of the material points. For the purpose of simplicity, a Cartesian grid is usually adopted.
+    1. An arbitrary computational grid is initialised to describe the natural coordinates of the material points. For the purpose of simplicity, a Cartesian grid is usually adopted.
 
-    1. The state variables (mass/density, velocity, strain, stress, other material parameters corresponding to the adopted constitutive relation) are initialized at every material point.
+    1. The state variables (mass/density, velocity, strain, stress, other material parameters corresponding to the adopted constitutive relation) are initialised at every material point.
 
     1. Mass of each material point is computed based on the density and initial volume. The initial volume is computed based on the material point spacing. The code assumes uniform spacing in all directions. Although the density of material points are updated, the mass is conserved.
 
         $$ m_p = \rho V_p $$
 
-1. Solution phase for time step $t$ to $t + \Delta t$
+1. Solution phase for time step $$ t $$ to $$ t + \Delta t $$
 
     1. Compute nodal mass 
         $$ m_i^t = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p $$
 
     1. Compute nodal momentum
-        $$ m \textbf{v}_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
+        $$ (m\textbf{v})_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
 
     1. Compute nodal velocities
-        $$ \textbf{v}_i^{t+\Delta t} = \frac{m \textbf{v}_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
+        $$ \textbf{v}_i^{t+\Delta t} = \frac{ (m\textbf{v})_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
 
     1. Assign force to nodes from previous step (for Newmark integration)
         $$ \textbf{f}_i^t = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{a}_p^t  $$
@@ -89,14 +89,14 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
         1. Newmark Integration
             $$ \textbf{x}_p^{t+\Delta t} = \textbf{x}_p^t + \Delta t \textbf{v}_p^t + \frac{1-2\beta_N}{2} {\Delta t}^2 \textbf{a}_p^t + \beta_N {\Delta t}^2 \textbf{a}_p^{t+\Delta t} $$
 
-1. At the end of every time step, all the variables on the grid nodes are initialized to zero. The material points carry all the information about the solution, and the computational grid is re-initialiszd for the next step.
+1. At the end of every time step, all the variables on the grid nodes are initialised to zero. The material points carry all the information about the solution, and the computational grid is re-initialised for the next step.
 
 1. Generate output files (.vtk) for each sub time step  
 
 > **Note** 
 > * MPM stores information at the material points and not at the nodes as it is in the Finite Element Method. This includes the application of traction at the material points, not at the nodes.
 > * The code uses Modified Update Stress Last (MUSL). It is done by moving this block of code to the bottom after the material points velocities and displacements have been updated.
-> * The code computes material points mass in the initialization. Even though the density is updated later, the mass is conserved.
+> * The code computes material points mass in the initialisation. Even though the density is updated later, the mass is conserved.
 
 
 ## Nomenclature
