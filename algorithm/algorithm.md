@@ -1,13 +1,14 @@
 # MPM Algorithm
 
-## Main Algorithm
+The UCAM-MPM3D code uses Modified Update Stress Last (MUSL) algorithm. MUSL
+calculates the nodal velocities from material point momentums at the end of the time step, i.e. before updating material points position.
 
 The Material Point Method (MPM) algorithm comprises of 4 stages.
 
 1. Initialisation
 
     1. A continuum body is discretised into a finite set of material points corresponding to the original configuration of the body. The number of material points corresponds to the resolution of the mesh size adopted in the Finite Element Method. The material points are followed throughout the deformation of the material, which is a Lagrangian description of the motion.
-    
+
     1. An arbitrary computational grid is initialised to describe the natural coordinates of the material points. For the purpose of simplicity, a Cartesian grid is usually adopted.
 
     1. The state variables (mass/density, velocity, strain, stress, other material parameters corresponding to the adopted constitutive relation) are initialised at every material point.
@@ -18,7 +19,7 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
 
 1. Solution phase for time step $$t$$ to $$t + \Delta t$$
 
-    1. Compute nodal mass 
+    1. Compute nodal mass
         $$ m_i^t = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p $$
 
     1. Compute nodal momentum     
@@ -36,7 +37,7 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
     1. Compute strain from previous time-step
         $$ \boldsymbol{\varepsilon}_p^t = \sum\limits_{p=1}^{n_P} B_i(\textbf{x}_p^t) \textbf{v}_i^t $$
 
-    1. Update stress from previous time-step ($\Delta\sigma_p^t$ depends on constitutive model)
+    1. Update stress from previous time-step ($$\Delta\sigma_p^t$$ depends on the constitutive model)
         $$ \boldsymbol{\sigma}_p^t = \boldsymbol{\sigma}_p^{t-\Delta t} + \Delta \boldsymbol{\sigma}_p^t $$
 
         $$ \Delta\boldsymbol{\sigma}_p^t= \mathbf{D} : \Delta \boldsymbol{\varepsilon}_p^t $$
@@ -93,17 +94,15 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
 
 1. Generate output files (.vtk) for each sub time step  
 
-> **Note** 
+> **Note**
 > * MPM stores information at the material points and not at the nodes as it is in the Finite Element Method. This includes the application of traction at the material points, not at the nodes.
-> * The code uses Modified Update Stress Last (MUSL). It is done by moving this block of code to the bottom after the material points velocities and displacements have been updated.
-> * The code computes material points mass in the initialisation. Even though the density is updated later, the mass is conserved.
 
 
 ## Nomenclature
 
 ### General
 
-$$G$$ gravity acceleration ($$G = 9.81 m/s^2$$)
+$$G$$ acceleration due to gravity ($$G = 9.81 m/s^2$$)
 
 $$\beta_N$$ parameter for Newmark integration
 
