@@ -124,7 +124,7 @@ $$s_p$$ spacing between material points
 
 $$\textbf{t}_p^t$$ traction at material point $$p$$
 
-$$\textbf{v}_p^t$$ velocity of material point $p$ at time $$t$$
+$$\textbf{v}_p^t$$ velocity of material point $$p$$ at time $$t$$
 
 $$V_p$$ volume at material points $$p$$
 
@@ -149,7 +149,7 @@ $$\textbf{f}_i^{int,t}$$ nodal internal force of node $$i$$ at time $$t$$
 
 $$m_i^t$$ mass of node $$i$$ at time $$t$$
 
-$$m\textbf{v}_i^t$$ momentum of node $$i$$ at time $t$
+$$m\textbf{v}_i^t$$ momentum of node $$i$$ at time $$t$$
 
 $$\textbf{t}_i^t$$ traction at node $$i$$
 
@@ -162,6 +162,6 @@ $$\boldsymbol{\sigma}_i^t$$ stress of node $$i$$ at time $$t$$
 
 ### Shape Functions
 
-$$B_i (\textbf{x}_p^t)$$ gradient of the shape function that maps node $$i$$ to material point $$p$$ and vice versa such that $B = \frac{dN}{d\textbf{x}}$
+$$B_i (\textbf{x}_p^t)$$ gradient of the shape function that maps node $$i$$ to material point $$p$$ and vice versa such that $$B = \frac{dN}{d\textbf{x}}$$
 
-$$N_i (\textbf{x}_p^t)$$ shape function that maps node $i$ to material point $$p$$ and vice versa with independent variable of the location of each material point at time $$t$$
+$$N_i (\textbf{x}_p^t)$$ shape function that maps node $$i$$ to material point $$p$$ and vice versa with independent variable of the location of each material point at time $$t$$
