@@ -14,44 +14,44 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
 
     1. Mass of each material point is computed based on the density and initial volume. The initial volume is computed based on the material point spacing. The code assumes uniform spacing in all directions. Although the density of material points are updated, the mass is conserved.
 
-        $$ m_p = \gamma V_p $$
+        $$ m_p = \rho V_p $$
 
 1. Solution phase for time step $t$ to $t + \Delta t$
 
     1. Compute nodal mass 
-        $$ m_i^t = \sum\limits_{p=1}^{N_P} N_i(\textbf{x}_p^t) m_p $$
+        $$ m_i^t = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p $$
 
     1. Compute nodal momentum
-        $$ m_i \textbf{v}_i^{t+\Delta t} = \Sigma_p N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
+        $$ m \textbf{v}_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
 
     1. Compute nodal velocities
-        $$ \textbf{v}_i^{t+\Delta t} = \frac{m_i \textbf{v}_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
-
-    1. Compute strain from previous time-step
-        $$ \boldsymbol{\varepsilon}_p^t = \Sigma_i B_i(\textbf{x}_p^t) \textbf{v}_i^t $$
-
-    1. Update stress from previous time-step ($\Delta\sigma_p^t$ depends on constitutive model)
-        $$ \boldsymbol{\sigma}_p^t = \boldsymbol{\sigma}_p^{t-\Delta t} + \Delta \boldsymbol{\sigma}_p^t $$
-
-        $$ \Delta\sigma_p^(t+\Delta t) = \mathbf{D} : \Delta \epsilon_p^{t+\Delta t} $$
+        $$ \textbf{v}_i^{t+\Delta t} = \frac{m \textbf{v}_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
 
     1. Assign force to nodes from previous step (for Newmark integration)
-        $$ \textbf{f}_i^t = \Sigma_p N_i(\textbf{x}_p^t) m_p \textbf{a}_p^t  $$
+        $$ \textbf{f}_i^t = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{a}_p^t  $$
 
     1. Compute nodal acceleration from previous step (for Newmark integration)
         $$ \textbf{a}_i^t = \frac{1}{m_i^t} \textbf{f}_i^{t} $$
 
+    1. Compute strain from previous time-step
+        $$ \boldsymbol{\varepsilon}_p^t = \sum\limits_{p=1}^{n_P} B_i(\textbf{x}_p^t) \textbf{v}_i^t $$
+
+    1. Update stress from previous time-step ($\Delta\sigma_p^t$ depends on constitutive model)
+        $$ \boldsymbol{\sigma}_p^t = \boldsymbol{\sigma}_p^{t-\Delta t} + \Delta \boldsymbol{\sigma}_p^t $$
+
+        $$ \Delta\boldsymbol{\sigma}_p^t= \mathbf{D} : \Delta \boldsymbol{\varepsilon}_p^t $$
+
     1. Compute body force at nodes from material points
-        $$ \textbf{b}_i^{t+\Delta t} = \Sigma_p N_i(\textbf{x}_p^t) m_p G $$
+        $$ \textbf{b}_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p G $$
 
     1. Compute traction at nodes from material points
-        $$ \textbf{t}_i^{t+\Delta t} = \Sigma_p N_i(\textbf{x}_p^t) \frac{m_I^{t+\Delta t}}{\gamma} \frac{1}{s_p} \textbf{t}_p^{t+\Delta t} $$
+        $$ \textbf{t}_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) \frac{m_I^{t+\Delta t}}{\gamma} \frac{1}{s_p} \textbf{t}_p^{t+\Delta t} $$
 
     1. Compute external force
         $$ (\textbf{f}_i)^{ext,t+\Delta t} = \textbf{b}_i^{t+\Delta t} + \textbf{t}_i^{t+\Delta t} $$
 
     1. Compute internal force
-        $$ (\textbf{f}_i)^{int,t+\Delta t} = \Sigma_i \frac{m_i^{t+\Delta t}}{\gamma} B_i(\textbf{x}_p^t) \boldsymbol{\sigma}_i^{t+\Delta t} $$
+        $$ (\textbf{f}_i)^{int,t+\Delta t} = \sum\limits_{p=1}^{n_P} \frac{m_i^{t+\Delta t}}{\gamma} B_i(\textbf{x}_p^t) \boldsymbol{\sigma}_i^{t+\Delta t} $$
 
     1. Compute nodal force
         $$ \textbf{f}_i^{t+\Delta t} = (\textbf{f}_i)^{int,t+\Delta t} + (\textbf{f}_i)^{ext,t+\Delta t}  $$
@@ -124,6 +124,8 @@ $m_p^t$ mass of material point $p$ at time $t$
 $m\textbf{v}_i^t$ momentum of node $i$ at time $t$
 
 $m\textbf{v}_p^t$ momentum of material point $p$ at time $t$
+
+$n_p$ total number of material points in the body
 
 $N_i (\textbf{x}_p^t) $ shape function that maps node $i$ to material point $p$ and vice versa with independent variable of the location of each material point at time $t$
 
