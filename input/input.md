@@ -156,13 +156,16 @@ In the example of element testing, there would not be any submesh used. Therefor
 The boundary constraints are specified and the file has to have the following format:
 
 ```
-NGC     NFC
+NGC     NFC     NVC 
 n_1     d_1
 ...
 n_NGC   d_NGC
 n_1     dn_1     sdn_1
 ...
 n_NFC   dn_NFC   sdn_NFC
+n_1     d_1     v_1     
+...
+n_NVC   d_NVC   v_NVC   
 
 ```
 
@@ -172,6 +175,8 @@ This will reduce point movement in the `d_i` direction the closer it is to that 
 
 `NFC` is the number of frictional constraints set on nodes within this file. These nodes are used to limit the acceleration in the tangential direction to boundary using the frictional algorithm and the fricional coefficiant `boundaryFrictionMiu`.
 
+`NVC` is the number of velocity constraints set on nodes within this file. Velocity is usually computed from momentum, and this constraints set velocity to certian value.
+
 `n_i` is the node number.
 
 `d_i` is the direction number `(0|1|2)` that corresponds to a cartesian direction, typically `(x|y|z)`.
@@ -179,6 +184,27 @@ This will reduce point movement in the `d_i` direction the closer it is to that 
 `dn_i` is the perpendicular direction to friction boundary in the form of the direction number `(0|1|2)`. 
 
 `sdn_i` is the `sign` `(+1/-1)` of `dn_i` with reference to the coordinate syste (i.e.=-1 if bottom of mesh boundary)
+
+`v_i` is the value of velocity being specified.
+
+An example of the `element_testing/inputFiles/mesh.constraints` is shown below.
+
+```
+4 4 2
+0 0
+2 0
+0 1
+1 1
+2 1 1
+3 1 1
+1 0 1
+3 0 1
+2 1 -0.002
+3 1 -0.002
+```
+In this case, there are 4 general constraints set on nodes, 4 frictional constraints and 2 velocity constraints. Multiple constraints can be set on nodes, for instance: `Node 0` has constraints in both the `0` direction and the `1` direction. 
+
+> **Note** The code is backward compatible to the case where velocity constraint is not specified. 
 
 An example of the `element_testing/inputFiles/mesh.constraints` is shown below.
 
@@ -194,6 +220,7 @@ An example of the `element_testing/inputFiles/mesh.constraints` is shown below.
 3 0 1
 ```
 In this case, there are 4 general constraints set on nodes and 4 frictional constraints. Multiple constraints can be set on nodes, for instance: `Node 0` has constraints in both the `0` direction and the `1` direction. 
+
 
 
 ## Soil Particles (Points) File
