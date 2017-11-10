@@ -23,10 +23,10 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
         $$ m_i^t = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p $$
 
     1. Compute nodal momentum     
-        $$ (m \textbf{v})_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{v}_p $$
+        $$ (m \textbf{v})_i^{t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{v}_p^{t} $$
 
     1. Compute nodal velocities
-        $$ \textbf{v}_i^{t+\Delta t} = \frac{(m\textbf{v})_i^{t+\Delta t}}{m_i^{t+\Delta t}} $$
+        $$ \textbf{v}_i^{t} = \frac{(m\textbf{v})_i^{t}}{m_i^{t}} $$
 
     1. Assign force to nodes from previous step (for Newmark integration)
         $$ \textbf{f}_i^t = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p \textbf{a}_p^t  $$
@@ -34,35 +34,35 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
     1. Compute nodal acceleration from previous step (for Newmark integration)
         $$ \textbf{a}_i^t = \frac{1}{m_i^t} \textbf{f}_i^{t} $$
 
-    1. Compute strain from previous time-step
+    1. Compute strain from previous time-step $$t$$
         $$ \boldsymbol{\varepsilon}_p^t = \sum\limits_{p=1}^{n_P} B_i(\textbf{x}_p^t) \textbf{v}_i^t $$
 
-    1. Update stress from previous time-step ($$\Delta\sigma_p^t$$ depends on the constitutive model)
+    1. Update stress from previous time-step $$t$$ ($$\Delta\sigma_p^t$$ depends on the constitutive model)
         $$ \boldsymbol{\sigma}_p^t = \boldsymbol{\sigma}_p^{t-\Delta t} + \Delta \boldsymbol{\sigma}_p^t $$
 
         $$ \Delta\boldsymbol{\sigma}_p^t= \mathbf{D} : \Delta \boldsymbol{\varepsilon}_p^t $$
 
     1. Compute body force at nodes from material points
-        $$ \textbf{b}_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p G $$
+        $$ \textbf{b}_i^{t} = G \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) m_p $$
 
     1. Compute traction at nodes from material points
-        $$ \textbf{t}_i^{t+\Delta t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) \frac{m_I^{t+\Delta t}}{\gamma} \frac{1}{s_p} \textbf{t}_p^{t+\Delta t} $$
+        $$ \textbf{t}_i^{t} = \sum\limits_{p=1}^{n_P} N_i(\textbf{x}_p^t) \frac{m_i^{t}}{\gamma} \frac{1}{s_p} \textbf{t}_p^{t} $$
 
     1. Compute external force
-        $$ (\textbf{f}_i)^{ext,t+\Delta t} = \textbf{b}_i^{t+\Delta t} + \textbf{t}_i^{t+\Delta t} $$
+        $$ (\textbf{f}_i)^{ext,t} = \textbf{b}_i^{t} + \textbf{t}_i^{t} $$
 
     1. Compute internal force
-        $$ (\textbf{f}_i)^{int,t+\Delta t} = \sum\limits_{p=1}^{n_P} \frac{m_i^{t+\Delta t}}{\gamma} B_i(\textbf{x}_p^t) \boldsymbol{\sigma}_i^{t+\Delta t} $$
+        $$ (\textbf{f}_i)^{int,t} = \sum\limits_{p=1}^{n_P} \frac{m_i^{t}}{\gamma} B_i(\textbf{x}_p^t) \boldsymbol{\sigma}_i^{t} $$
 
     1. Compute nodal force
-        $$ \textbf{f}_i^{t+\Delta t} = (\textbf{f}_i)^{int,t+\Delta t} + (\textbf{f}_i)^{ext,t+\Delta t}  $$
+        $$ \textbf{f}_i^{t} = (\textbf{f}_i)^{int,t+\Delta t} + (\textbf{f}_i)^{ext,t+\Delta t}  $$
 
     1. Compute nodal acceleration
-        $$ \textbf{a}_i^{t+\Delta t} = \frac{1}{m_i^t} \textbf{f}_i^{t+\Delta t}$$
+        $$ \textbf{a}_i^{t} = \frac{1}{m_i^t} \textbf{f}_i^{t}$$
 
     1. Compute nodal velocity
         1. Normal Integration
-            $$ \textbf{v}_i^{t+\Delta t} = \textbf{v}_i^{t} + \Delta t \textbf{a}_i^{t+\Delta t} $$
+            $$ \textbf{v}_i^{t+\Delta t} = \textbf{v}_i^{t} + \Delta t \textbf{a}_i^{t} $$
 
         1. Newmark Integration
             $$ \textbf{v}_i^{t+\Delta t} = \textbf{v}_i^{t} + \Delta t (1-\gamma_N) \textbf{a}_i^t + \Delta t \gamma_N \textbf{a}_i^{t+\Delta t} $$
@@ -71,14 +71,14 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
         $$ \rho = \frac{\rho}{1 + \varepsilon_{v,p}} $$
 
     1. Update material points acceleration
-        $$ \textbf{a}_p^{t+\Delta t} = \Sigma_i N_i(\textbf{x}_p^t) \textbf{a}_i^{t+\Delta t} $$
+        $$ \textbf{a}_p^{t} = \Sigma_i N_i(\textbf{x}_p^t) \textbf{a}_i^{t} $$
 
     1. Update material points velocity
         1. Mapping from nodal velocity
             $$ \textbf{v}_p^{t+\Delta t} = \Sigma_i N_i(\textbf{x}_p^t) \textbf{v}_i^{t+\Delta t} $$
 
         1. Normal Integration
-            $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t  \textbf{a}_I^{t+\Delta t} $$
+            $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t  \textbf{a}_p^{t} $$
 
         1. Newmark Integration
             $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^{t} + (1-\gamma_N) \Delta t \textbf{a}_p^t + \gamma_N \Delta t \textbf{a}_p^{t+\Delta t} $$
