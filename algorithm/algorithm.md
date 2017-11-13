@@ -58,11 +58,11 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
         $$ \textbf{f}_i^{t} = (\textbf{f}_i)^{int,t+\Delta t} + (\textbf{f}_i)^{ext,t+\Delta t}  $$
 
     1. Compute nodal acceleration
-        $$ \textbf{a}_i^{t} = \frac{1}{m_i^t} \textbf{f}_i^{t}$$
+        $$ \textbf{a}_i^{t+\Delta t} = \frac{1}{m_i^t} \textbf{f}_i^{t}$$
 
     1. Compute nodal velocity
         1. Normal Integration
-            $$ \textbf{v}_i^{t+\Delta t} = \textbf{v}_i^{t} + \Delta t \textbf{a}_i^{t} $$
+            $$ \textbf{v}_i^{t+\Delta t} = \textbf{v}_i^{t} + \Delta t \textbf{a}_i^{t+\Delta t} $$
 
         1. Newmark Integration
             $$ \textbf{v}_i^{t+\Delta t} = \textbf{v}_i^{t} + \Delta t (1-\gamma_N) \textbf{a}_i^t + \Delta t \gamma_N \textbf{a}_i^{t+\Delta t} $$
@@ -78,7 +78,7 @@ The Material Point Method (MPM) algorithm comprises of 4 stages.
             $$ \textbf{v}_p^{t+\Delta t} = \Sigma_i N_i(\textbf{x}_p^t) \textbf{v}_i^{t+\Delta t} $$
 
         1. Normal Integration
-            $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t  \textbf{a}_p^{t} $$
+            $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^t + \Delta t  \textbf{a}_p^{t+\Delta t} $$
 
         1. Newmark Integration
             $$ \textbf{v}_p^{t+\Delta t} = \textbf{v}_p^{t} + (1-\gamma_N) \Delta t \textbf{a}_p^t + \gamma_N \Delta t \textbf{a}_p^{t+\Delta t} $$
