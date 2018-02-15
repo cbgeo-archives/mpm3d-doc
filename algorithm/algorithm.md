@@ -1,9 +1,6 @@
 # MPM Algorithm
 
-The UCAM-MPM3D code uses Modified Update Stress Last (MUSL) algorithm. MUSL
-calculates the nodal velocities from material point momentums at the end of the time step, i.e. before updating material points position.
-
-The Material Point Method (MPM) algorithm comprises of 4 stages.
+The UCAM-MPM3D code uses Update Stress First (USF) algorithm. The Material Point Method (MPM) algorithm comprises of 4 stages.
 
 1. Initialisation
 
